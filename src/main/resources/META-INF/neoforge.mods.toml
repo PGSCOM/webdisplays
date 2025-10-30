@@ -1,6 +1,6 @@
 modLoader="javafml" #mandatory
 
-loaderVersion="[43,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
+loaderVersion="[1,)" #mandatory
 
 license="MIT"
 
@@ -10,7 +10,7 @@ issueTrackerURL="" #optional
 
 modId="webdisplays" #mandatory
 
-version="2.0.1-1.21.1" #mandatory
+version="2.0.2-1.21.1" #mandatory
 
 displayName="WebDisplays" #mandatory
 
@@ -26,22 +26,22 @@ description='''
 '''
 
 [[dependencies.webdisplays]] #optional
-modId="forge" #mandatory
-mandatory=true #mandatory
-versionRange="[43,)" #mandatory
+modId="neoforge" #mandatory
+type="required" #mandatory
+versionRange="[21.1,)" #mandatory
 ordering="NONE"
 side="BOTH"
 
 [[dependencies.webdisplays]]
 modId="minecraft"
-mandatory=true
+type="required"
 versionRange="[1.21.1,)"
 ordering="NONE"
 side="BOTH"
 
 [[dependencies.webdisplays]]
 modId="mcef"
-mandatory=true
-versionRange="[2.0.0+1.21.1, )"
+type="required"
+versionRange="[2.0.0, )"
 ordering="NONE"
 side="BOTH"

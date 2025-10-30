@@ -1,113 +1,122 @@
 plugins {
-    id 'eclipse'
+    id 'java-library'
     id 'maven-publish'
-    id 'net.neoforged.gradle' version '[6.0.18,6.2)'
-    id 'org.spongepowered.mixin' version '0.7.+'
-    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+    id 'net.neoforged.gradle.userdev' version '7.0.192'
 }
-apply plugin: 'org.spongepowered.mixin'
-
-println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 
 version = mod_version
-group = maven_group // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = archives_base_name
+group = mod_group_id
 
-// set java version
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+base {
+    archivesName = mod_id
+}
 
-// required for making a functional mod
-sourceSets.main.resources.srcDirs += 'src/generated/resources'
-mixin.add sourceSets.main, "webdisplays.refmap.json"
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
+    withSourcesJar()
+}
 
-// neoforge gradle
-minecraft {
-    mappings channel: 'parchment', version: '2023.06.26-1.21.1'
-
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
-
-    copyIdeResources = true
-
-    runs {
-        client {
-            properties 'mixin.env.remapRefMap': 'true'
-            property 'mixin.env.refMapRemappingFile', "${project.projectDir}/build/createSrgToMcp/output.srg"
-            workingDirectory project.file('run')
-            arg "-mixin.config=webdisplays.mixins.json"
-            property 'forge.logging.console.level', 'debug'
-
-            mods {
-                webdisplays {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        server {
-            properties 'mixin.env.remapRefMap': 'true'
-            property 'mixin.env.refMapRemappingFile', "${project.projectDir}/build/createSrgToMcp/output.srg"
-            workingDirectory project.file('run')
-            arg "-mixin.config=webdisplays.mixins.json"
-
-
-            property 'forge.logging.console.level', 'debug'
-
-            mods {
-                webdisplays {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        data {
-            workingDirectory project.file('run')
-            properties 'mixin.env.remapRefMap': 'true'
-            property 'mixin.env.refMapRemappingFile', "${project.projectDir}/build/createSrgToMcp/output.srg"
-            property 'forge.logging.console.level', 'debug'
-            args '--mod', 'webdisplays', '--all', '--output', file('src/generated/resources/'), '--existing', sourceSets.main.resources.srcDirs[0]
-            mods {
-                webdisplays {
-                    source sourceSets.main
-                }
-            }
-        }
+repositories {
+    mavenCentral()
+    maven { url 'https://maven.neoforged.net/releases' }
+    maven { url 'https://cursemaven.com' }
+    maven { url 'https://jitpack.io' }
+    maven {
+        name = "mcef-download"
+        url = uri("https://maven.cinemamod.com")
+        content { includeGroup("com.cinemamod") }
     }
 }
 
-repositories{
-    maven {
-        name = "cursemaven"
-        url = "https://www.cursemaven.com"
-    }
-    maven { url 'https://mcef-download.cinemamod.com/repositories/releases/' }
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+configurations {
+    // For dependencies needed only at runtime in dev
+    localRuntime
 }
 
 dependencies {
-    minecraft 'net.neoforged:forge:1.21.1-47.1.65'
+    // NeoForge platform
+    implementation "net.neoforged:neoforge:${neo_version}"
+
+    // Mixin processor
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
-    // useful for debugging performance problems
-    implementation fg.deobf("curse.maven:spark-361579:4381167")
-    // here because we need to manually open the VR keyboard
-    compileOnly fg.deobf("curse.maven:vivecraft-667903:4794431")
+    // Project dependencies
+    implementation "com.cinemamod:mcef-forge:2.1.1-1.21.1"
+    localRuntime 'curse.maven:spark-361579:4762301' // Spark profiler at runtime only
+    compileOnly 'curse.maven:vivecraft-ops-667903:5843871'
+}
 
-    implementation fg.deobf("com.cinemamod:mcef-forge:2.1.1-1.21.1") {
-        transitive = false
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 21
+    // Generate Mixin refmap without mixingradle
+    options.compilerArgs += ["-AoutRefMap=webdisplays.refmap.json"]
+}
+
+runs {
+    client {
+        workingDirectory project.file('run/client')
+        systemProperty 'neoforge.enabledGameTestNamespaces', mod_id
+        arguments.addAll '--username', 'Player'
+        jvmArguments.addAll '-mixin.config=webdisplays.mixins.json'
+    }
+    server {
+        workingDirectory project.file('run/server')
+        systemProperty 'neoforge.enabledGameTestNamespaces', mod_id
+        arguments.addAll '--nogui'
+        jvmArguments.addAll '-mixin.config=webdisplays.mixins.json'
+    }
+    gameTestServer {
+        workingDirectory project.file('run/gametest')
+        systemProperty 'neoforge.enabledGameTestNamespaces', mod_id
+        jvmArguments.addAll '-mixin.config=webdisplays.mixins.json'
+    }
+    data {
+        workingDirectory project.file('run/data')
+        arguments.addAll '--mod', mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
     }
 }
 
-// jar meta-info
 jar {
     manifest {
-        attributes([
-                "Specification-Title": "WebDisplays",
-                "Specification-Vendor": "CinemaMod Group",
-                "Specification-Version": "1", // We are version 1 of ourselves
-                "Implementation-Title": project.name,
-                "Implementation-Version": project.version,
-                "Implementation-Vendor": "CinemaMod Group",
-                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                "MixinConfigs": "webdisplays.mixins.json"
-        ])
+        attributes(
+            'Specification-Title': mod_id,
+            'Specification-Vendor': 'montoyo',
+            'Specification-Version': '1',
+            'Implementation-Title': project.name,
+            'Implementation-Version': project.version,
+            'Implementation-Vendor' : 'montoyo',
+            'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+            'MixinConfigs': 'webdisplays.mixins.json'
+        )
     }
 }
+
+processResources {
+    inputs.property 'version', project.version
+    filesMatching('META-INF/neoforge.mods.toml') { // use NeoForge toml
+        expand(
+            'version': project.version,
+            'mod_id': mod_id,
+            'mod_name': mod_name,
+            'mod_authors': mod_authors,
+            'mod_description': mod_description,
+            'minecraft_version': minecraft_version,
+            'minecraft_version_range': minecraft_version_range,
+            'neo_version': neo_version,
+            'neo_version_range': neo_version_range,
+            'loader_version_range': loader_version_range
+        )
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
+ 
