@@ -22,7 +22,7 @@ mixin.add sourceSets.main, "webdisplays.refmap.json"
 
 // neoforge gradle
 minecraft {
-    mappings channel: 'parchment', version: '2023.06.26-1.20.1'
+    mappings channel: 'parchment', version: '2023.06.26-1.21.1'
 
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
@@ -83,7 +83,7 @@ repositories{
 }
 
 dependencies {
-    minecraft 'net.neoforged:forge:1.20.1-47.1.65'
+    minecraft 'net.neoforged:forge:1.21.1-47.1.65'
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
     // useful for debugging performance problems
@@ -91,7 +91,7 @@ dependencies {
     // here because we need to manually open the VR keyboard
     compileOnly fg.deobf("curse.maven:vivecraft-667903:4794431")
 
-    implementation fg.deobf("com.cinemamod:mcef-forge:2.1.1-1.20.1") {
+    implementation fg.deobf("com.cinemamod:mcef-forge:2.1.1-1.21.1") {
         transitive = false
     }
 }
