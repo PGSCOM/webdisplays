@@ -16,6 +16,15 @@ if "%DIRNAME%" == "" set DIRNAME=.
 set APP_BASE_NAME=%~n0
 set APP_HOME=%DIRNAME%
 
+@rem Forzar JDK específico para este wrapper (anula JAVA_HOME solo para esta ejecución)
+@rem Cambia la ruta abajo si quieres usar otra instalación de Java
+set "GRADLE_FORCE_JAVA=C:\Program Files\Java\jdk-21"
+if exist "%GRADLE_FORCE_JAVA%\bin\java.exe" (
+	set "JAVA_HOME=%GRADLE_FORCE_JAVA%"
+	rem Actualizamos JAVA_EXE aquí para que el resto del script lo use
+	set "JAVA_EXE=%JAVA_HOME%/bin/java.exe"
+)
+
 @rem Find java.exe
 if defined JAVA_HOME goto findJavaFromJavaHome
 
