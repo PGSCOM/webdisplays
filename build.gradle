@@ -1,7 +1,7 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version '7.0.192'
+    id 'net.neoforged.gradle.userdev' version '7.1.1'
 }
 
 version = mod_version
@@ -17,6 +17,7 @@ java {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
     maven { url 'https://maven.neoforged.net/releases' }
     maven { url 'https://cursemaven.com' }
@@ -29,6 +30,8 @@ repositories {
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
+// Añadimos fuentes "solo para compilar" (stubs) y las excluimos del artefacto final
+sourceSets.main.java.srcDir 'src/compileOnly/java'
 
 configurations {
     // For dependencies needed only at runtime in dev
@@ -44,8 +47,21 @@ dependencies {
 
     // Project dependencies
     implementation "com.cinemamod:mcef-forge:2.1.1-1.21.1"
-    localRuntime 'curse.maven:spark-361579:4762301' // Spark profiler at runtime only
-    compileOnly 'curse.maven:vivecraft-ops-667903:5843871'
+    // Spark profiler (1.21.1 compatible) desde CurseMaven: https://www.curseforge.com/minecraft/mc-mods/spark/files/5622205
+    localRuntime 'curse.maven:spark-361579:5622205' // Spark profiler at runtime only
+    // Vivecraft (NeoForge) para 1.21.x — CurseForge project 667903, file 7129676
+    // Referencia: https://www.curseforge.com/minecraft/mc-mods/vivecraft/files/7129676
+    compileOnly 'curse.maven:vivecraft-667903:7129676'
+    // Y disponible en runtime para ejecuciones de desarrollo
+    runtimeOnly 'curse.maven:vivecraft-667903:7129676'
+}
+
+// Sustitución: si no se puede resolver com.cinemamod:mcef-forge, usa el artefacto de CurseMaven equivalente para NeoForge 1.21.1
+configurations.all {
+    resolutionStrategy.dependencySubstitution {
+        substitute module('com.cinemamod:mcef-forge:2.1.1-1.21.1') using module('curse.maven:mcef-636236:5828243')
+        // Vivecraft se fija directamente al fileId 7129676, así que no es necesaria sustitución adicional
+    }
 }
 
 tasks.withType(JavaCompile).configureEach {
@@ -53,6 +69,11 @@ tasks.withType(JavaCompile).configureEach {
     options.release = 21
     // Generate Mixin refmap without mixingradle
     options.compilerArgs += ["-AoutRefMap=webdisplays.refmap.json"]
+}
+
+// Asegura que las dependencias de solo runtime locales se agreguen al classpath de ejecucion
+configurations {
+    runtimeClasspath.extendsFrom(localRuntime)
 }
 
 runs {
@@ -92,6 +113,8 @@ jar {
             'MixinConfigs': 'webdisplays.mixins.json'
         )
     }
+    // Evitar empaquetar clases stub usadas solo para compilar contra Vivecraft
+    exclude('org/vivecraft/**')
 }
 
 processResources {
@@ -119,4 +142,4 @@ publishing {
         }
     }
 }
- 
+
