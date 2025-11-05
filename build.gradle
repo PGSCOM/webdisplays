@@ -81,18 +81,18 @@ runs {
         workingDirectory project.file('run/client')
         systemProperty 'neoforge.enabledGameTestNamespaces', mod_id
         arguments.addAll '--username', 'Player'
-        jvmArguments.addAll '-mixin.config=webdisplays.mixins.json'
+        jvmArguments.addAll '-Xmx4G', '-Xms2G', '-XX:+UseG1GC', '-XX:+ParallelRefProcEnabled', '-XX:MaxGCPauseMillis=200', '-XX:+UnlockExperimentalVMOptions', '-XX:+DisableExplicitGC', '-XX:G1HeapRegionSize=32M', '-mixin.config=webdisplays.mixins.json'
     }
     server {
         workingDirectory project.file('run/server')
         systemProperty 'neoforge.enabledGameTestNamespaces', mod_id
         arguments.addAll '--nogui'
-        jvmArguments.addAll '-mixin.config=webdisplays.mixins.json'
+        jvmArguments.addAll '-Xmx3G', '-Xms1G', '-XX:+UseG1GC', '-mixin.config=webdisplays.mixins.json'
     }
     gameTestServer {
         workingDirectory project.file('run/gametest')
         systemProperty 'neoforge.enabledGameTestNamespaces', mod_id
-        jvmArguments.addAll '-mixin.config=webdisplays.mixins.json'
+        jvmArguments.addAll '-Xmx2G', '-Xms512M', '-mixin.config=webdisplays.mixins.json'
     }
     data {
         workingDirectory project.file('run/data')

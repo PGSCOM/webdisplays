@@ -20,37 +20,42 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.client.event.ClientChatEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.event.ServerChatEvent;
-import net.minecraftforge.event.entity.item.ItemTossEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.level.LevelEvent;
-import net.minecraftforge.event.server.ServerStoppingEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.network.PacketDistributor;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.montoyo.wd.client.ClientProxy;
-import net.montoyo.wd.client.gui.camera.KeyboardCamera;
+import net.neoforged.neoforge.client.event.ClientChatEvent;
+import net.neoforged.neoforge.common.NeoForge;
+// import net.neoforged.neoforge.event.AttachCapabilitiesEvent; // TODO: Capabilities system rewritten in 21.x
+import net.neoforged.neoforge.event.ServerChatEvent;
+import net.neoforged.neoforge.event.entity.item.ItemTossEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.level.LevelEvent;
+import net.neoforged.neoforge.event.server.ServerStoppingEvent;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModList;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.registries.DeferredRegister;
+// TODO: Temporarily disabled - ClientProxy.java.disabled, KeyboardCamera.java.disabled
+// import net.montoyo.wd.client.ClientProxy;
+// import net.montoyo.wd.client.gui.camera.KeyboardCamera;
 import net.montoyo.wd.config.ClientConfig;
 import net.montoyo.wd.config.CommonConfig;
-import net.montoyo.wd.controls.ScreenControlRegistry;
+// TODO: Temporarily disabled - ScreenControlRegistry.java.disabled
+// import net.montoyo.wd.controls.ScreenControlRegistry;
 import net.montoyo.wd.core.*;
-import net.montoyo.wd.miniserv.server.Server;
-import net.montoyo.wd.net.WDNetworkRegistry;
-import net.montoyo.wd.net.client_bound.S2CMessageServerInfo;
+// TODO: Temporarily disabled - Server.java.disabled (miniserv package)
+// import net.montoyo.wd.miniserv.server.Server;
+// TODO: Temporarily disabled - WDNetworkRegistry.java.disabled
+// import net.montoyo.wd.net.WDNetworkRegistry;
+// TODO: Temporarily disabled - S2CMessageServerInfo.java.disabled
+// import net.montoyo.wd.net.client_bound.S2CMessageServerInfo;
 import net.montoyo.wd.registry.BlockRegistry;
-import net.montoyo.wd.registry.ItemRegistry;
-import net.montoyo.wd.registry.TileRegistry;
+// TODO: Temporarily disabled - ItemRegistry.java.disabled, TileRegistry.java.disabled
+// import net.montoyo.wd.registry.ItemRegistry;
+// import net.montoyo.wd.registry.TileRegistry;
 import net.montoyo.wd.registry.WDTabs;
-import net.montoyo.wd.utilities.DistSafety;
+// TODO: Temporarily disabled - DistSafety.java.disabled
+// import net.montoyo.wd.utilities.DistSafety;
 import net.montoyo.wd.utilities.Log;
 import net.montoyo.wd.utilities.serialization.Util;
 
@@ -65,12 +70,14 @@ import java.util.UUID;
 public class WebDisplays {
     public static WebDisplays INSTANCE;
 
-    public static SharedProxy PROXY = null;
+    // TODO: Temporarily disabled - SharedProxy.java.disabled
+    // public static SharedProxy PROXY = null;
     
-    public static final ResourceLocation ADV_PAD_BREAK = new ResourceLocation("webdisplays", "webdisplays/pad_break");
+    // TODO: ResourceLocation constructor changed in 1.21.1
+    public static final ResourceLocation ADV_PAD_BREAK = ResourceLocation.fromNamespaceAndPath("webdisplays", "webdisplays/pad_break");
     public static final String BLACKLIST_URL = "mod://webdisplays/blacklisted.html";
     public static final Gson GSON = new Gson();
-    public static final ResourceLocation CAPABILITY = new ResourceLocation("webdisplays", "customdatacap");
+    public static final ResourceLocation CAPABILITY = ResourceLocation.fromNamespaceAndPath("webdisplays", "customdatacap");
 
     //Sounds
     public SoundEvent soundTyping;
@@ -80,11 +87,13 @@ public class WebDisplays {
     public SoundEvent soundServer;
     public SoundEvent soundIronic;
 
-    //Criterions
+    //Criterions - TODO: Achievement API changed in 1.21.1
+    /*
     public Criterion criterionPadBreak;
     public Criterion criterionUpgradeScreen;
     public Criterion criterionLinkPeripheral;
     public Criterion criterionKeyboardCat;
+    */
 
     //Config
     public static final double PAD_RATIO = 59.0 / 30.0;
@@ -103,49 +112,61 @@ public class WebDisplays {
     private boolean hasOC;
     private boolean hasCC;
 
-    public WebDisplays() {
+    public WebDisplays(IEventBus modEventBus) {
         INSTANCE = this;
+        // TODO: Temporarily disabled - SharedProxy.java.disabled, ClientProxy.java.disabled
+        /*
         if(FMLEnvironment.dist.isClient()) {
             PROXY = DistSafety.createProxy();
         } else {
             PROXY = new SharedProxy();
         }
+        */
     
+        // TODO: Temporarily disabled - ClientProxy.java.disabled, KeyboardCamera.java.disabled
+        /*
         if (FMLEnvironment.dist.isClient()) {
             // proxies are annoying, so from now on, I'mma be just registering stuff in here
-            FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientProxy::onKeybindRegistry);
-            MinecraftForge.EVENT_BUS.addListener(ClientProxy::onDrawSelection);
-            MinecraftForge.EVENT_BUS.addListener(KeyboardCamera::updateCamera);
-            MinecraftForge.EVENT_BUS.addListener(KeyboardCamera::gameTick);
-            ClientConfig.init();
+            modEventBus.addListener(ClientProxy::onKeybindRegistry);
+            NeoForge.EVENT_BUS.addListener(ClientProxy::onDrawSelection);
+            NeoForge.EVENT_BUS.addListener(KeyboardCamera::updateCamera);
+            NeoForge.EVENT_BUS.addListener(KeyboardCamera::gameTick);
+            ClientConfig.init(modEventBus);
         }
+        */
         
-        CommonConfig.init();
+        CommonConfig.init(modEventBus);
         
-        //Criterions
+        //Criterions - TODO: Achievement API changed in 1.21.1
+        /*
         criterionPadBreak = new Criterion("pad_break");
         criterionUpgradeScreen = new Criterion("upgrade_screen");
         criterionLinkPeripheral = new Criterion("link_peripheral");
         criterionKeyboardCat = new Criterion("keyboard_cat");
         registerTrigger(criterionPadBreak, criterionUpgradeScreen, criterionLinkPeripheral, criterionKeyboardCat);
+        */
 
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        WDNetworkRegistry.init();
-        SOUNDS.register(bus);
+        // TODO: Temporarily disabled - WDNetworkRegistry.java.disabled
+        // modEventBus.addListener(WDNetworkRegistry::register);
+        // WDNetworkRegistry.init();
+        SOUNDS.register(modEventBus);
         onRegisterSounds();
-        WDTabs.init(bus);
-        BlockRegistry.init(bus);
-        ItemRegistry.init(bus);
-        TileRegistry.init(bus);
+        WDTabs.init(modEventBus);
+        BlockRegistry.init(modEventBus);
+        // TODO: Temporarily disabled - ItemRegistry.java.disabled, TileRegistry.java.disabled
+        // ItemRegistry.init(modEventBus);
+        // TileRegistry.init(modEventBus);
         
-        PROXY.preInit();
+        // TODO: Temporarily disabled - SharedProxy.java.disabled
+        // PROXY.preInit();
         
-        MinecraftForge.EVENT_BUS.register(this);
+        // TODO: Temporarily disabled - need to check NeoForge import
+        // NeoForge.EVENT_BUS.register(this);
 
-        //Other things
-        PROXY.init();
+        //Other things - TODO: Temporarily disabled - SharedProxy.java.disabled
+        // PROXY.init();
 
-        PROXY.postInit();
+        // PROXY.postInit();
         hasOC = ModList.get().isLoaded("opencomputers");
         hasCC = ModList.get().isLoaded("computercraft");
 
@@ -159,17 +180,24 @@ public class WebDisplays {
             }
         } */
         
+        // TODO: Temporarily disabled - ScreenControlRegistry.java.disabled
+        /*
         if (!FMLEnvironment.production) {
             ScreenControlRegistry.init();
         }
+        */
     }
 
+    // TODO: Capabilities system completely rewritten in NeoForge 21.x
+    // Need to migrate to DataComponentType-based system
+    /*
     @SubscribeEvent
     public static void onAttachPlayerCap(AttachCapabilitiesEvent<Entity> event) {
         if (event.getObject() instanceof Player && !event.getObject().getCapability(WDDCapability.Provider.cap).isPresent()) {
             event.addCapability(new ResourceLocation("webdisplays", "wddcapability"), new WDDCapability.Provider());
         }
     }
+    */
 
     public void onRegisterSounds() {
         soundTyping = registerSound("keyboard_type");
@@ -180,6 +208,8 @@ public class WebDisplays {
         soundIronic = registerSound("ironic");
     }
 
+    // TODO: Temporarily disabled - Server.java.disabled (miniserv package)
+    /*
     ArrayList<ResourceKey<Level>> serverStartedDimensions = new ArrayList<>();
 
     @SubscribeEvent
@@ -250,7 +280,10 @@ public class WebDisplays {
             }
         }
     }
+    */
 
+    // TODO: Temporarily disabled - ItemRegistry.java.disabled, Server.java.disabled, etc.
+    /*
     @SubscribeEvent
     public void onToss(ItemTossEvent ev) {
         if(!ev.getEntity().level().isClientSide) {
@@ -321,7 +354,10 @@ public class WebDisplays {
         if(!ev.getEntity().level().isClientSide)
             Server.getInstance().getClientManager().revokeClientKey(ev.getEntity().getGameProfile().getId());
     }
+    */
 
+    // TODO: Capabilities system completely rewritten in NeoForge 21.x
+    /*
     @SubscribeEvent
     public void attachEntityCaps(AttachCapabilitiesEvent<Entity> ev) {
         if(ev.getObject() instanceof Player)
@@ -345,7 +381,10 @@ public class WebDisplays {
 
         src.cloneTo(dst);
     }
+    */
 
+    // TODO: Temporarily disabled - chat events
+    /*
     @SubscribeEvent
     public void onServerChat(ServerChatEvent ev) {
         String msg = ev.getMessage().getString().replaceAll("\\s+", " ").toLowerCase();
@@ -381,21 +420,26 @@ public class WebDisplays {
     public static int getNextAvailablePadID() {
         return new WebDisplays().lastPadId++;
     }
+    */
 
-    public static DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, "webdisplays");
+    public static DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT, "webdisplays");
 
     private static SoundEvent registerSound(String resName) {
-        ResourceLocation resLoc = new ResourceLocation("webdisplays", resName);
+        // TODO: ResourceLocation constructor changed in 1.21.1
+        ResourceLocation resLoc = ResourceLocation.fromNamespaceAndPath("webdisplays", resName);
         SoundEvent ret = SoundEvent.createVariableRangeEvent(resLoc);
 
         SOUNDS.register(resName, () -> ret);
         return ret;
     }
 
+    // TODO: Achievement API changed in 1.21.1
+    /*
     private static void registerTrigger(Criterion ... criteria) {
         for(Criterion c: criteria)
             CriteriaTriggers.register(c);
     }
+    */
 
    // public static boolean isOpenComputersAvailable() {
    //     return INSTANCE.hasOC;

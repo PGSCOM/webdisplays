@@ -8,14 +8,16 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 public class WDTabs {
 	public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, "webdisplays");
 	
-	public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB = TABS.register("main", () -> CreativeModeTab.builder()
+	// TODO: Temporarily disabled - ItemRegistry.java.disabled
+	/*
+	public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EXAMPLE_TAB = TABS.register("main", () -> CreativeModeTab.builder()
 			// Set name of tab to display
 			.title(Component.translatable("itemGroup.webdisplays"))
 			// Set icon of creative tab
@@ -45,6 +47,7 @@ public class WDTabs {
 			})
 			.build()
 	);
+	*/
 	
 	public static void init(IEventBus bus) {
 		TABS.register(bus);

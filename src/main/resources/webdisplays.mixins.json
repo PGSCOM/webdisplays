@@ -7,8 +7,6 @@
   "mixins": [
   ],
   "client": [
-    "MouseHandlerMixin",
-    "OverlayMixin"
   ],
   "injectors": {
     "defaultRequire": 1

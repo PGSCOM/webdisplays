@@ -85,7 +85,8 @@ public abstract class Util {
 
             return Arrays.copyOf(ray, ray.length, cls);
         } else if (cls == ResourceLocation.class) {
-            return new ResourceLocation(bb.readUtf());
+            // TODO: ResourceLocation constructor changed in 1.21.1, use parse() instead
+            return ResourceLocation.parse(bb.readUtf());
         } else if (!cls.isPrimitive()) {
             Object ret;
             Field[] fields = cls.getFields();
