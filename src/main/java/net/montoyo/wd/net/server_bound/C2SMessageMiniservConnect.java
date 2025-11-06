@@ -19,7 +19,7 @@ import java.util.Objects;
 public class C2SMessageMiniservConnect extends WDPayload {
 
 	public static final CustomPacketPayload.Type<C2SMessageMiniservConnect> TYPE = 
-		new CustomPacketPayload.Type<>(new ResourceLocation("webdisplays", "miniserv_connect"));
+		new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath("webdisplays", "miniserv_connect"));
 	
 	private byte[] modulus;
 	private byte[] exponent;

@@ -130,6 +130,9 @@ public class SharedProxy {
     }
 
     public double distanceTo(ScreenBlockEntity tes, Vec3 position) {
+        // TODO: Update for new ScreenBlockEntity API
+        return Double.POSITIVE_INFINITY;
+        /*
         double dist = Double.POSITIVE_INFINITY;
         for (int i = 0; i < tes.screenCount(); i++) {
             ScreenData scrn = tes.getScreen(i);
@@ -143,6 +146,7 @@ public class SharedProxy {
             double dist2 = position.distanceToSqr(pos.x, pos.y, pos.z);
             dist = Math.min(dist, dist2);
         }
+        */
         return dist;
     }
 }

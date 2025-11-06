@@ -66,7 +66,12 @@ public class ScreenControlRegistry {
 	}
 	
 	public static ScreenControl parse(FriendlyByteBuf buf) {
-		return CONTROL_TYPES.get(new ResourceLocation(buf.readUtf()))
+		String fullId = buf.readUtf();
+		String[] parts = fullId.split(":", 2);
+		ResourceLocation id = parts.length == 2 ? 
+			ResourceLocation.fromNamespaceAndPath(parts[0], parts[1]) : 
+			ResourceLocation.fromNamespaceAndPath("webdisplays", fullId);
+		return CONTROL_TYPES.get(id)
 				.deserializer.apply(buf);
 	}
 	
