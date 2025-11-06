@@ -1,4 +1,5 @@
 package net.montoyo.wd.controls.builtin;
+import net.minecraft.server.level.ServerPlayer;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -16,7 +17,7 @@ import net.montoyo.wd.utilities.math.Vector3i;
 import java.util.function.Function;
 
 public class SetURLControl extends ScreenControl {
-	public static final ResourceLocation id = ResourceLocation.fromNamespaceAndPath("webdisplays:set_url");
+	public static final ResourceLocation id = ResourceLocation.fromNamespaceAndPath("webdisplays", "set_url");
 	
 	String url;
 	Vector3i remoteLocation;
@@ -43,7 +44,7 @@ public class SetURLControl extends ScreenControl {
 	@Override
 	public void handleServer(BlockPos pos, BlockSide side, ScreenBlockEntity tes, IPayloadContext ctx, Function<Integer, Boolean> permissionChecker) throws MissingPermissionException {
 		// TODO: deal with remote
-		checkPerms(ScreenRights.CHANGE_URL, permissionChecker, ctx.player());
+		checkPerms(ScreenRights.CHANGE_URL, permissionChecker, (ServerPlayer) ctx.player());
 		try {
 			tes.setScreenURL(side, url);
 		} catch (Throwable err) {

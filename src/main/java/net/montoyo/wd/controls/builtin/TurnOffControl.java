@@ -15,7 +15,7 @@ import net.montoyo.wd.utilities.data.BlockSide;
 import java.util.function.Function;
 
 public class TurnOffControl extends ScreenControl {
-	public static final ResourceLocation id = ResourceLocation.fromNamespaceAndPath("webdisplays:deactivate");
+	public static final ResourceLocation id = ResourceLocation.fromNamespaceAndPath("webdisplays", "deactivate");
 
 	public static final TurnOffControl INSTANCE = new TurnOffControl();
 

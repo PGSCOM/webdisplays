@@ -22,7 +22,7 @@ import java.util.function.Function;
  */
 @Deprecated
 public class ManageRightsAndUpdgradesControl extends ScreenControl {
-	public static final ResourceLocation id = ResourceLocation.fromNamespaceAndPath("webdisplays:mod_rights_upgrades");
+	public static final ResourceLocation id = ResourceLocation.fromNamespaceAndPath("webdisplays", "mod_rights_upgrades");
 	
 	public enum ControlType {
 		RIGHTS, UPGRADES
@@ -81,10 +81,10 @@ public class ManageRightsAndUpdgradesControl extends ScreenControl {
 	
 	@Override
 	public void handleServer(BlockPos pos, BlockSide side, ScreenBlockEntity tes, IPayloadContext ctx, Function<Integer, Boolean> permissionChecker) throws MissingPermissionException {
-		ServerPlayer player = ctx.player();
+		ServerPlayer player = (ServerPlayer) ctx.player();
 		switch (type) {
 			case UPGRADES -> {
-				checkPerms(ScreenRights.MANAGE_UPGRADES, permissionChecker, ctx.player());
+				checkPerms(ScreenRights.MANAGE_UPGRADES, permissionChecker, (ServerPlayer) ctx.player());
 				if (adding)
 					throw new RuntimeException("Cannot add an upgrade from the client");
 				else tes.removeUpgrade(side, toRemove, player);
@@ -104,7 +104,7 @@ public class ManageRightsAndUpdgradesControl extends ScreenControl {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void handleClient(BlockPos pos, BlockSide side, ScreenBlockEntity tes, IPayloadContext ctx) {
-		ServerPlayer player = ctx.player();
+		ServerPlayer player = (ServerPlayer) ctx.player();
 		switch (type) {
 			case UPGRADES -> {
 				if (adding)

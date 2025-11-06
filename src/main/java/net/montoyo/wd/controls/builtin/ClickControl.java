@@ -15,7 +15,7 @@ import net.montoyo.wd.utilities.math.Vector2i;
 import java.util.function.Function;
 
 public class ClickControl extends ScreenControl {
-	public static final ResourceLocation id = ResourceLocation.fromNamespaceAndPath("webdisplays:click");
+	public static final ResourceLocation id = ResourceLocation.fromNamespaceAndPath("webdisplays", "click");
 	
 	public enum ControlType {
 		CLICK, MOVE, DOWN, UP

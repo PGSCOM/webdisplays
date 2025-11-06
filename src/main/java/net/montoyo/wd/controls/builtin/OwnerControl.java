@@ -15,7 +15,7 @@ import net.montoyo.wd.utilities.serialization.NameUUIDPair;
 import java.util.function.Function;
 
 public class OwnerControl extends ScreenControl {
-	public static final ResourceLocation id = ResourceLocation.fromNamespaceAndPath("webdisplays:set_owner");
+	public static final ResourceLocation id = ResourceLocation.fromNamespaceAndPath("webdisplays", "set_owner");
 	
 	NameUUIDPair owner;
 	

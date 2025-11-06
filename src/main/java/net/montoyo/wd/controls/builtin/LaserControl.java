@@ -16,7 +16,7 @@ import net.montoyo.wd.utilities.math.Vector2i;
 import java.util.function.Function;
 
 public class LaserControl extends ScreenControl {
-	public static final ResourceLocation id = ResourceLocation.fromNamespaceAndPath("webdisplays:laser");
+	public static final ResourceLocation id = ResourceLocation.fromNamespaceAndPath("webdisplays", "laser");
 	
 	public enum ControlType {
 		MOVE, DOWN, UP
@@ -56,8 +56,8 @@ public class LaserControl extends ScreenControl {
 	@Override
 	public void handleServer(BlockPos pos, BlockSide side, ScreenBlockEntity tes, IPayloadContext ctx, Function<Integer, Boolean> permissionChecker) throws MissingPermissionException {
 		// feel like this makes sense, but I wanna get opinions first
-//		checkPerms(ScreenRights.INTERACT, permissionChecker, ctx.player());
-		ServerPlayer sender = ctx.player();
+//		checkPerms(ScreenRights.INTERACT, permissionChecker, (ServerPlayer) ctx.player());
+		ServerPlayer sender = (ServerPlayer) ctx.player();
 		switch (type) {
 			case UP -> tes.laserUp(side, sender, button);
 			case DOWN -> tes.laserDownMove(side, sender, coord, true, button);

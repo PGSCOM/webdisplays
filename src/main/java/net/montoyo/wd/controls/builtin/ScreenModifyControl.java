@@ -1,4 +1,5 @@
 package net.montoyo.wd.controls.builtin;
+import net.minecraft.server.level.ServerPlayer;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -17,7 +18,7 @@ import net.montoyo.wd.utilities.math.Vector2i;
 import java.util.function.Function;
 
 public class ScreenModifyControl extends ScreenControl {
-	public static final ResourceLocation id = ResourceLocation.fromNamespaceAndPath("webdisplays:mod_screen");
+	public static final ResourceLocation id = ResourceLocation.fromNamespaceAndPath("webdisplays", "mod_screen");
 	
 	public enum ControlType {
 		RESOLUTION, ROTATION
@@ -56,7 +57,7 @@ public class ScreenModifyControl extends ScreenControl {
 	
 	@Override
 	public void handleServer(BlockPos pos, BlockSide side, ScreenBlockEntity tes, IPayloadContext ctx, Function<Integer, Boolean> permissionChecker) throws MissingPermissionException {
-		checkPerms(ScreenRights.MODIFY_SCREEN, permissionChecker, ctx.player());
+		checkPerms(ScreenRights.MODIFY_SCREEN, permissionChecker, (ServerPlayer) ctx.player());
 		switch (type) {
 			case RESOLUTION -> tes.setResolution(side, res);
 			case ROTATION -> tes.setRotation(side, rotation);

@@ -17,7 +17,7 @@ import net.montoyo.wd.utilities.serialization.NameUUIDPair;
 import java.util.function.Function;
 
 public class ModifyFriendListControl extends ScreenControl {
-	public static final ResourceLocation id = ResourceLocation.fromNamespaceAndPath("webdisplays:mod_friend_list");
+	public static final ResourceLocation id = ResourceLocation.fromNamespaceAndPath("webdisplays", "mod_friend_list");
 	
 	boolean adding;
 	NameUUIDPair friend;
@@ -42,8 +42,8 @@ public class ModifyFriendListControl extends ScreenControl {
 	
 	@Override
 	public void handleServer(BlockPos pos, BlockSide side, ScreenBlockEntity tes, IPayloadContext ctx, Function<Integer, Boolean> permissionChecker) throws MissingPermissionException {
-		ServerPlayer player = ctx.player();
-		checkPerms(ScreenRights.MANAGE_FRIEND_LIST, permissionChecker, ctx.player());
+		ServerPlayer player = (ServerPlayer) ctx.player();
+		checkPerms(ScreenRights.MANAGE_FRIEND_LIST, permissionChecker, (ServerPlayer) ctx.player());
 		if (adding) tes.addFriend(player, side, friend);
 		else tes.removeFriend(player, side, friend);
 	}
