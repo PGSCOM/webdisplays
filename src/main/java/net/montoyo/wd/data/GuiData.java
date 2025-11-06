@@ -1,4 +1,4 @@
-﻿package net.montoyo.wd.data;
+package net.montoyo.wd.data;
 
 import net.minecraft.network.FriendlyByteBuf;
 
@@ -22,14 +22,6 @@ public abstract class GuiData {
     }
 
     private static final HashMap<String, GuiType> dataTable = new HashMap<>();
-    
-    static {
-        dataTable.put("SetURL", new GuiType(SetURLData.class, SetURLData::new));
-        dataTable.put("ScreenConfig", new GuiType(ScreenConfigData.class, ScreenConfigData::new));
-        dataTable.put("Keyboard", new GuiType(KeyboardData.class, KeyboardData::new));
-        dataTable.put("RedstoneCtrl", new GuiType(RedstoneCtrlData.class, RedstoneCtrlData::new));
-        dataTable.put("Server", new GuiType(ServerData.class, ServerData::new));
-    }
 
     public static GuiData read(String name, FriendlyByteBuf buf) {
         GuiType type = dataTable.get(name);
