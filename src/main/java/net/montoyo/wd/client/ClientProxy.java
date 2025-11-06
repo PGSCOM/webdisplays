@@ -82,7 +82,8 @@ import net.montoyo.wd.registry.BlockRegistry;
 import net.montoyo.wd.registry.ItemRegistry;
 import net.montoyo.wd.registry.TileRegistry;
 import net.montoyo.wd.utilities.Log;
-import net.montoyo.wd.utilities.Multiblock;
+// TODO: Re-enable when Multiblock is available
+// import net.montoyo.wd.utilities.Multiblock;
 import net.montoyo.wd.utilities.browser.WDBrowser;
 import net.montoyo.wd.utilities.browser.handlers.DisplayHandler;
 import net.montoyo.wd.utilities.browser.handlers.WDRouter;
