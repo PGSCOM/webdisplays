@@ -12,7 +12,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.PacketDistributor;
-import net.montoyo.wd.client.gui.GuiScreenConfig;
+// TODO: Re-enable when GuiScreenConfig is available
+// import net.montoyo.wd.client.gui.GuiScreenConfig;
 import net.montoyo.wd.entity.ScreenData;
 import net.montoyo.wd.entity.ScreenBlockEntity;
 import net.montoyo.wd.net.BufferUtils;
@@ -46,6 +47,8 @@ public class ScreenConfigData extends GuiData {
 	@OnlyIn(Dist.CLIENT)
 	@Override
 	public Screen createGui(Screen old, Level world) {
+		// TODO: Re-enable when GuiScreenConfig is available
+		/*
 		if (old != null && old instanceof GuiScreenConfig) {
 			GuiScreenConfig gsc = (GuiScreenConfig) old;
 			
@@ -69,6 +72,8 @@ public class ScreenConfigData extends GuiData {
 		}
 		
 		return new GuiScreenConfig(Component.nullToEmpty(""), (ScreenBlockEntity) te, side, friends, friendRights, otherRights);
+		*/
+		return null;
 	}
 	
 	@Override

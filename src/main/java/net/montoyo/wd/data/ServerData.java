@@ -10,7 +10,8 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.montoyo.wd.client.gui.GuiServer;
+// TODO: Re-enable when GuiServer is available
+// import net.montoyo.wd.client.gui.GuiServer;
 import net.montoyo.wd.net.BufferUtils;
 import net.montoyo.wd.utilities.serialization.NameUUIDPair;
 import net.montoyo.wd.utilities.math.Vector3i;
@@ -30,7 +31,9 @@ public class ServerData extends GuiData {
     @OnlyIn(Dist.CLIENT)
     @Override
     public Screen createGui(Screen old, Level world) {
-        return new GuiServer(pos, owner);
+        // TODO: Re-enable when GuiServer is available
+        // return new GuiServer(pos, owner);
+        return null;
     }
 
     @Override

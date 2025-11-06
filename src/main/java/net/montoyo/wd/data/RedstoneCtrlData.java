@@ -11,7 +11,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.montoyo.wd.client.gui.GuiRedstoneCtrl;
+// TODO: Re-enable when GuiRedstoneCtrl is available
+// import net.montoyo.wd.client.gui.GuiRedstoneCtrl;
 import net.montoyo.wd.net.BufferUtils;
 import net.montoyo.wd.utilities.math.Vector3i;
 
@@ -35,7 +36,9 @@ public class RedstoneCtrlData extends GuiData {
     @OnlyIn(Dist.CLIENT)
     @Override
     public Screen createGui(Screen old, Level world) {
-        return new GuiRedstoneCtrl(old.getTitle(), dimension, pos, risingEdgeURL, fallingEdgeURL); //TODO is getTitle() correct?
+        // TODO: Re-enable when GuiRedstoneCtrl is available
+        // return new GuiRedstoneCtrl(old.getTitle(), dimension, pos, risingEdgeURL, fallingEdgeURL);
+        return null;
     }
 
     @Override
