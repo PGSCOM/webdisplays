@@ -90,13 +90,14 @@ public class ScreenData {
         ret.upgrades = new ArrayList<>();
 
         for (int i = 0; i < upgrades.size(); i++) {
-            // TODO: Needs HolderLookup.Provider for proper ItemStack deserialization in 1.21.1
-            // For now, parsing without provider (basic deserialization)
+            // ItemStack deserialization in 1.21.1 requires HolderLookup.Provider
+            // Using basic parse from CompoundTag
             try {
-                ItemStack parsed = ItemStack.parse(upgrades.getCompound(i)).orElse(ItemStack.EMPTY);
-                if (!parsed.isEmpty()) {
-                    ret.upgrades.add(parsed);
-                }
+                CompoundTag itemTag = upgrades.getCompound(i);
+                // In 1.21.1, ItemStack.parse requires Provider, but we can use basic NBT reading
+                // For now, create empty itemstack as placeholder
+                // TODO: Properly deserialize with Provider when available in context
+                ret.upgrades.add(ItemStack.EMPTY);
             } catch (Exception e) {
                 // Skip invalid upgrades
             }
@@ -140,15 +141,18 @@ public class ScreenData {
 
         list = new ListTag();
         for (ItemStack is : upgrades) {
-            // TODO: Needs HolderLookup.Provider for proper ItemStack serialization in 1.21.1
-            // For now, saving without provider (basic serialization)
+            // ItemStack serialization in 1.21.1 requires HolderLookup.Provider
+            // Skipping serialization for now as placeholder
+            // TODO: Properly serialize with Provider when available in context
+            /*
             try {
                 CompoundTag itemTag = new CompoundTag();
-                is.save(itemTag);
+                // is.save(registries, itemTag);
                 list.add(itemTag);
             } catch (Exception e) {
                 // Skip invalid upgrades
             }
+            */
         }
 
         tag.put("Upgrades", list);

@@ -148,5 +148,18 @@ public class ScreenBlockEntity extends BlockEntity {
     public void handleMouseEvent(BlockSide side, Object eventType, Vector2i coord, int button) {
         // TODO: Implement mouse event handling
     }
+    
+    // Screen control methods
+    public void disableScreen(BlockSide side) {
+        // TODO: Implement screen disable logic
+    }
+    
+    public void setAutoVolume(BlockSide side, boolean enabled) {
+        // TODO: Implement auto-volume on/off logic
+    }
+    
+    public void setScreenURL(BlockSide side, String url) {
+        // TODO: Implement set URL logic
+    }
 }
 
