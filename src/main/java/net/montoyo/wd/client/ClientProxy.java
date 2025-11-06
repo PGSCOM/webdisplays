@@ -147,8 +147,8 @@ public class ClientProxy extends SharedProxy implements ResourceManagerReloadLis
 		if (!LaserPointerRenderer.isOn()) {
 			RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.ONE_MINUS_DST_COLOR, GlStateManager.DestFactor.ONE_MINUS_SRC_COLOR, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 
-			poseStack.blit(new ResourceLocation(
-					"webdisplays:textures/gui/cursors.png"
+			poseStack.blit(ResourceLocation.fromNamespaceAndPath(
+					"webdisplays", "textures/gui/cursors.png"
 			), (screenWidth - 15) / 2, (screenHeight - 15) / 2, offset, 240, 240, 15, 15, 256, 256);
 			ci.cancel();
 			return;
@@ -164,8 +164,8 @@ public class ClientProxy extends SharedProxy implements ResourceManagerReloadLis
 		if (result.getType() != HitResult.Type.BLOCK || mc.level.getBlockState(bpos).getBlock() != BlockRegistry.SCREEN_BLOCk.get()) {
 			RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.ONE_MINUS_DST_COLOR, GlStateManager.DestFactor.ONE_MINUS_SRC_COLOR, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 
-			poseStack.blit(new ResourceLocation(
-					"webdisplays:textures/gui/cursors.png"
+			poseStack.blit(ResourceLocation.fromNamespaceAndPath(
+					"webdisplays", "textures/gui/cursors.png"
 			), (screenWidth - 15) / 2, (screenHeight - 15) / 2, offset, 240, 240, 15, 15, 256, 256);
 			ci.cancel();
 			return;
@@ -190,8 +190,8 @@ public class ClientProxy extends SharedProxy implements ResourceManagerReloadLis
 		
 		RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.ONE_MINUS_DST_COLOR, GlStateManager.DestFactor.ONE_MINUS_SRC_COLOR, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 
-		poseStack.blit(new ResourceLocation(
-				"webdisplays:textures/gui/cursors.png"
+		poseStack.blit(ResourceLocation.fromNamespaceAndPath(
+				"webdisplays", "textures/gui/cursors.png"
 		), (screenWidth - 15) / 2, (screenHeight - 15) / 2, offset, coordX, coordY, 15, 15, 256, 256);
 
 		ci.cancel();
@@ -270,7 +270,8 @@ public class ClientProxy extends SharedProxy implements ResourceManagerReloadLis
 	/**************************************** INHERITED METHODS ****************************************/
 	@SubscribeEvent
 	public static void onClientSetup(FMLClientSetupEvent event) {
-		BlockEntityRenderers.register(TileRegistry.SCREEN_BLOCK_ENTITY.get(), new ScreenRenderer.ScreenRendererProvider());
+		// TODO: Re-enable when ScreenRenderer is available
+		// BlockEntityRenderers.register(TileRegistry.SCREEN_BLOCK_ENTITY.get(), new ScreenRenderer.ScreenRendererProvider());
 	}
 	
 	// TODO: ForgeHooksClient renamed/moved in NeoForge 21.x - need to update ScreenModelLoader
@@ -596,7 +597,7 @@ public class ClientProxy extends SharedProxy implements ResourceManagerReloadLis
 		
 		ScreenBlockEntity tes = screenTracking.get(id);
 		
-		if (!tes.getLevel().equals(ev.level))
+		if (!tes.getLevel().equals(ev.getLevel()))
 			return;
 		
 		lastTracked++;
