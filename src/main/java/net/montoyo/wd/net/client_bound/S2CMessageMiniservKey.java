@@ -9,8 +9,7 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.montoyo.wd.WebDisplays;
-// TODO: Re-enable when ClientProxy is available
-// import net.montoyo.wd.client.ClientProxy;
+import net.montoyo.wd.client.ClientProxy;
 import net.montoyo.wd.miniserv.client.Client;
 import net.montoyo.wd.net.BufferUtils;
 import net.montoyo.wd.net.WDPayload;
@@ -19,7 +18,7 @@ import net.montoyo.wd.utilities.Log;
 public class S2CMessageMiniservKey extends WDPayload {
 	
 	public static final CustomPacketPayload.Type<S2CMessageMiniservKey> TYPE = 
-		new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath("webdisplays", "miniserv_key"));
+		new CustomPacketPayload.Type<>(new ResourceLocation("webdisplays", "miniserv_key"));
 	
 	private byte[] encryptedKey;
 	
@@ -47,12 +46,9 @@ public class S2CMessageMiniservKey extends WDPayload {
 			context.enqueueWork(() -> {
 				if (Client.getInstance().decryptKey(encryptedKey)) {
 					Log.info("Successfully received and decrypted key, starting miniserv client...");
-					// TODO: Re-enable when ClientProxy is available
-					/*
 					if (WebDisplays.PROXY instanceof ClientProxy proxy) {
 						proxy.startMiniservClient();
 					}
-					*/
 				}
 			});
 		}

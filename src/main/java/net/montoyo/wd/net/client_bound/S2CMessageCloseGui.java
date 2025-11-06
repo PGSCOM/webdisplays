@@ -18,7 +18,7 @@ import java.util.Arrays;
 public class S2CMessageCloseGui extends WDPayload {
 	
 	public static final CustomPacketPayload.Type<S2CMessageCloseGui> TYPE = 
-		new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath("webdisplays", "close_gui"));
+		new CustomPacketPayload.Type<>(new ResourceLocation("webdisplays", "close_gui"));
 	
 	private BlockPos blockPos;
 	private BlockSide blockSide;
@@ -59,13 +59,10 @@ public class S2CMessageCloseGui extends WDPayload {
 	public void handle(IPayloadContext context) {
 		if (isClient(context)) {
 			context.enqueueWork(() -> {
-				// TODO: Re-enable when PROXY is available
-				/*
 				if (blockSide == null)
 					Arrays.stream(BlockSide.values()).forEach(s -> WebDisplays.PROXY.closeGui(blockPos, s));
 				else
 					WebDisplays.PROXY.closeGui(blockPos, blockSide);
-				*/
 			});
 		}
 	}

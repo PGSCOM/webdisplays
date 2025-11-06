@@ -6,8 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-// TODO: Re-enable when ItemMinePad2 is available
-// import net.montoyo.wd.item.ItemMinePad2;
+import net.montoyo.wd.item.ItemMinePad2;
 import net.montoyo.wd.net.WDPayload;
 
 import java.util.UUID;
@@ -15,7 +14,7 @@ import java.util.UUID;
 public class C2SMessageMinepadUrl extends WDPayload {
 
 	public static final CustomPacketPayload.Type<C2SMessageMinepadUrl> TYPE = 
-		new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath("webdisplays", "minepad_url"));
+		new CustomPacketPayload.Type<>(new ResourceLocation("webdisplays", "minepad_url"));
 	
 	UUID id;
 	String url;
@@ -36,8 +35,6 @@ public class C2SMessageMinepadUrl extends WDPayload {
 		buf.writeUtf(url);
 	}
 	
-	// TODO: Re-enable when ItemStack.getOrCreateTag() or equivalent is available
-	/*
 	protected void merge(ItemStack stack) {
 		if (url.equals("")) {
 			stack.getOrCreateTag().remove("PadID");
@@ -46,14 +43,11 @@ public class C2SMessageMinepadUrl extends WDPayload {
 			stack.getOrCreateTag().putString("PadURL", url);
 		}
 	}
-	*/
 	
 	@Override
 	public void handle(IPayloadContext context) {
 		if (!isServer(context)) return;
 
-		// TODO: Re-enable when ItemMinePad2 is available
-		/*
 		// check if the player is holding a minePad with the requested id
 		// if the player is, then update that pad
 		for (InteractionHand value : InteractionHand.values()) {
@@ -75,7 +69,6 @@ public class C2SMessageMinepadUrl extends WDPayload {
 				return;
 			}
 		}
-		*/
 	}
 	
 	@Override

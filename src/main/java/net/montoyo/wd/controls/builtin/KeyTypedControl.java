@@ -3,7 +3,6 @@ package net.montoyo.wd.controls.builtin;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
@@ -12,45 +11,42 @@ import net.montoyo.wd.core.MissingPermissionException;
 import net.montoyo.wd.core.ScreenRights;
 import net.montoyo.wd.entity.ScreenBlockEntity;
 import net.montoyo.wd.utilities.data.BlockSide;
-import net.montoyo.wd.utilities.serialization.NameUUIDPair;
 
 import java.util.function.Function;
 
-public class ModifyFriendListControl extends ScreenControl {
-	public static final ResourceLocation id = new ResourceLocation("webdisplays:mod_friend_list");
+public class KeyTypedControl extends ScreenControl {
+	public static final ResourceLocation id = ResourceLocation.fromNamespaceAndPath("webdisplays:type");
 	
-	boolean adding;
-	NameUUIDPair friend;
+	String text;
+	BlockPos soundPos;
 	
-	public ModifyFriendListControl(NameUUIDPair pair, boolean adding) {
+	public KeyTypedControl(String text, BlockPos soundPos) {
 		super(id);
-		this.adding = adding;
-		this.friend = pair;
+		this.text = text;
+		this.soundPos = soundPos;
 	}
 	
-	public ModifyFriendListControl(FriendlyByteBuf buf) {
+	public KeyTypedControl(FriendlyByteBuf buf) {
 		super(id);
-		adding = buf.readBoolean();
-		friend = new NameUUIDPair(buf);
+		text = buf.readUtf();
+		soundPos = buf.readBlockPos();
 	}
 	
 	@Override
 	public void write(FriendlyByteBuf buf) {
-		buf.writeBoolean(adding);
-		friend.writeTo(buf);
+		buf.writeUtf(text);
+		buf.writeBlockPos(soundPos);
 	}
 	
 	@Override
 	public void handleServer(BlockPos pos, BlockSide side, ScreenBlockEntity tes, IPayloadContext ctx, Function<Integer, Boolean> permissionChecker) throws MissingPermissionException {
-		ServerPlayer player = ctx.getSender();
-		checkPerms(ScreenRights.MANAGE_FRIEND_LIST, permissionChecker, ctx.getSender());
-		if (adding) tes.addFriend(player, side, friend);
-		else tes.removeFriend(player, side, friend);
+		checkPerms(ScreenRights.INTERACT, permissionChecker, ctx.player());
+		tes.type(side, text, soundPos, ctx.player());
 	}
 	
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void handleClient(BlockPos pos, BlockSide side, ScreenBlockEntity tes, IPayloadContext ctx) {
-		throw new RuntimeException("TODO");
+		tes.type(side, text, soundPos);
 	}
 }

@@ -16,7 +16,7 @@ import net.montoyo.wd.net.server_bound.C2SMessageMiniservConnect;
 public class S2CMessageServerInfo extends WDPayload {
 	
 	public static final CustomPacketPayload.Type<S2CMessageServerInfo> TYPE = 
-		new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath("webdisplays", "server_info"));
+		new CustomPacketPayload.Type<>(new ResourceLocation("webdisplays", "server_info"));
 	
 	private int miniservPort;
 	
@@ -43,8 +43,7 @@ public class S2CMessageServerInfo extends WDPayload {
 		if (isClient(context)) {
 			context.enqueueWork(() -> {
 				try {
-					// TODO: Re-enable when PROXY is available
-					// WebDisplays.PROXY.setMiniservClientPort(miniservPort);
+					WebDisplays.PROXY.setMiniservClientPort(miniservPort);
 					C2SMessageMiniservConnect message = Client.getInstance().beginConnection();
 					context.reply(message);
 				} catch (Throwable err) {

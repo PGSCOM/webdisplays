@@ -58,6 +58,8 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.LogicalSide;
 import net.neoforged.fml.common.Mod;
+import net.montoyo.wd.data.GuiData;
+import net.montoyo.wd.entity.ScreenBlockEntity;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.montoyo.wd.SharedProxy;

@@ -8,40 +8,56 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.montoyo.wd.controls.ScreenControl;
 import net.montoyo.wd.core.MissingPermissionException;
+import net.montoyo.wd.core.ScreenRights;
 import net.montoyo.wd.entity.ScreenBlockEntity;
 import net.montoyo.wd.utilities.data.BlockSide;
-import net.montoyo.wd.utilities.serialization.NameUUIDPair;
+import net.montoyo.wd.utilities.math.Vector3i;
 
 import java.util.function.Function;
 
-public class OwnerControl extends ScreenControl {
-	public static final ResourceLocation id = new ResourceLocation("webdisplays:set_owner");
+public class SetURLControl extends ScreenControl {
+	public static final ResourceLocation id = ResourceLocation.fromNamespaceAndPath("webdisplays:set_url");
 	
-	NameUUIDPair owner;
+	String url;
+	Vector3i remoteLocation;
 	
-	public OwnerControl(NameUUIDPair pair) {
+	public SetURLControl(String url, Vector3i remoteLocation) {
 		super(id);
-		this.owner = pair;
+		this.url = url;
+		this.remoteLocation = remoteLocation;
 	}
 	
-	public OwnerControl(FriendlyByteBuf buf) {
+	public SetURLControl(FriendlyByteBuf buf) {
 		super(id);
-		owner = new NameUUIDPair(buf);
+		url = buf.readUtf();
+		if (buf.readBoolean()) remoteLocation = new Vector3i(buf);
 	}
 	
 	@Override
 	public void write(FriendlyByteBuf buf) {
-		owner.writeTo(buf);
+		buf.writeUtf(url);
+		buf.writeBoolean(remoteLocation != null);
+		if (remoteLocation != null) remoteLocation.writeTo(buf);
 	}
 	
 	@Override
 	public void handleServer(BlockPos pos, BlockSide side, ScreenBlockEntity tes, IPayloadContext ctx, Function<Integer, Boolean> permissionChecker) throws MissingPermissionException {
-		throw new RuntimeException("Cannot handle ownership theft packet from server");
+		// TODO: deal with remote
+		checkPerms(ScreenRights.CHANGE_URL, permissionChecker, ctx.player());
+		try {
+			tes.setScreenURL(side, url);
+		} catch (Throwable err) {
+			err.printStackTrace();
+		}
 	}
 	
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void handleClient(BlockPos pos, BlockSide side, ScreenBlockEntity tes, IPayloadContext ctx) {
-		tes.getScreen(side).owner = owner;
+		try {
+			tes.setScreenURL(side, url);
+		} catch (Throwable err) {
+			err.printStackTrace();
+		}
 	}
 }

@@ -31,7 +31,7 @@ public class ScreenControlRegistry {
 			if (FMLEnvironment.dist.isClient()) {
 				boolean shouldThrow = false;
 				try {
-					Method m = type.clazz.getMethod("handleClient", BlockPos.class, BlockSide.class, ScreenBlockEntity.class, NetworkEvent.Context.class);
+					Method m = type.clazz.getMethod("handleClient", BlockPos.class, BlockSide.class, ScreenBlockEntity.class, net.neoforged.neoforge.network.handling.IPayloadContext.class);
 					OnlyIn onlyIn = m.getAnnotation(OnlyIn.class);
 					if (onlyIn == null) shouldThrow = true;
 					Dist d = onlyIn.value(); // idc if this throws, lol

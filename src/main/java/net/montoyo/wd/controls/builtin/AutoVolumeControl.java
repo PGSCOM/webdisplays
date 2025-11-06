@@ -15,7 +15,7 @@ import net.montoyo.wd.utilities.data.BlockSide;
 import java.util.function.Function;
 
 public class AutoVolumeControl extends ScreenControl {
-	public static final ResourceLocation id = new ResourceLocation("webdisplays:auto_volume");
+	public static final ResourceLocation id = ResourceLocation.fromNamespaceAndPath("webdisplays:auto_volume");
 	
 	boolean autoVol;
 	
@@ -37,7 +37,7 @@ public class AutoVolumeControl extends ScreenControl {
 	@Override
 	public void handleServer(BlockPos pos, BlockSide side, ScreenBlockEntity tes, IPayloadContext ctx, Function<Integer, Boolean> permissionChecker) throws MissingPermissionException {
 		// I feel like there's probably a better permission category
-		checkPerms(ScreenRights.MANAGE_UPGRADES, permissionChecker, ctx.getSender());
+		checkPerms(ScreenRights.MANAGE_UPGRADES, permissionChecker, ctx.player());
 		tes.setAutoVolume(side, autoVol);
 	}
 	
