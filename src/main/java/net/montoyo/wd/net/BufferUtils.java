@@ -1,6 +1,7 @@
 package net.montoyo.wd.net;
 
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.item.ItemStack;
 import net.montoyo.wd.utilities.math.Vector3i;
 
 import java.util.Arrays;
@@ -77,5 +78,14 @@ public class BufferUtils {
 		if (ord == 0) return null;
 		
 		return mapper.apply(ord - 1);
+	}
+	
+	// ItemStack serialization methods for 1.21.1
+	public static ItemStack readItem(FriendlyByteBuf buf) {
+		return ItemStack.OPTIONAL_STREAM_CODEC.decode(buf);
+	}
+	
+	public static void writeItem(FriendlyByteBuf buf, ItemStack stack) {
+		ItemStack.OPTIONAL_STREAM_CODEC.encode(buf, stack);
 	}
 }

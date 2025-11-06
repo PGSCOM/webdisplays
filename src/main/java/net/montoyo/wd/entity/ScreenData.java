@@ -89,8 +89,15 @@ public class ScreenData {
         ListTag upgrades = tag.getList("Upgrades", 10);
         ret.upgrades = new ArrayList<>();
 
-        for (int i = 0; i < upgrades.size(); i++)
-            ret.upgrades.add(ItemStack.of(upgrades.getCompound(i)));
+        for (int i = 0; i < upgrades.size(); i++) {
+            // TODO: Needs HolderLookup.Provider for proper ItemStack deserialization in 1.21.1
+            // For now, using parseOptional as a workaround
+            try {
+                ret.upgrades.add(ItemStack.parseOptional(net.minecraft.core.HolderLookup.Provider.create(), upgrades.getCompound(i)));
+            } catch (Exception e) {
+                // Skip invalid upgrades
+            }
+        }
 
         if (tag.contains("AutoVolume"))
             ret.autoVolume = tag.getBoolean("AutoVolume");
@@ -129,8 +136,15 @@ public class ScreenData {
         tag.putByte("OtherRights", (byte) otherRights);
 
         list = new ListTag();
-        for (ItemStack is : upgrades)
-            list.add(is.save(new CompoundTag()));
+        for (ItemStack is : upgrades) {
+            // TODO: Needs HolderLookup.Provider for proper ItemStack serialization in 1.21.1
+            // For now, using saveOptional as a workaround
+            try {
+                list.add(is.saveOptional(net.minecraft.core.HolderLookup.Provider.create()));
+            } catch (Exception e) {
+                // Skip invalid upgrades
+            }
+        }
 
         tag.put("Upgrades", list);
         tag.putBoolean("AutoVolume", autoVolume);

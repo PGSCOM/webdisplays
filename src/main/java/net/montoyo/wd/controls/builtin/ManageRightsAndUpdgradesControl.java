@@ -13,6 +13,7 @@ import net.montoyo.wd.core.MissingPermissionException;
 import net.montoyo.wd.core.ScreenRights;
 import net.montoyo.wd.entity.ScreenData;
 import net.montoyo.wd.entity.ScreenBlockEntity;
+import net.montoyo.wd.net.BufferUtils;
 import net.montoyo.wd.utilities.data.BlockSide;
 
 import java.util.function.Function;
@@ -55,7 +56,7 @@ public class ManageRightsAndUpdgradesControl extends ScreenControl {
 		switch (type) {
 			case UPGRADES -> {
 				adding = buf.readBoolean();
-				toRemove = buf.readItem();
+				toRemove = BufferUtils.readItem(buf);
 			}
 			case RIGHTS -> {
 				friendRights = buf.readInt();
@@ -70,7 +71,7 @@ public class ManageRightsAndUpdgradesControl extends ScreenControl {
 		switch (type) {
 			case UPGRADES -> {
 				buf.writeBoolean(adding);
-				buf.writeItem(toRemove);
+				BufferUtils.writeItem(buf, toRemove);
 			}
 			case RIGHTS -> {
 				buf.writeInt(friendRights);

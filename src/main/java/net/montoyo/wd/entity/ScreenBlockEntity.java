@@ -98,4 +98,49 @@ public class ScreenBlockEntity extends BlockEntity {
     public void setLoaded(boolean loaded) {
         // TODO: Implement
     }
+
+    // Friend management methods
+    public void addFriend(Object player, BlockSide side, Object friend) {
+        // TODO: Implement friend list management
+    }
+    
+    public void removeFriend(Object player, BlockSide side, Object friend) {
+        // TODO: Implement friend list management
+    }
+    
+    // Screen configuration methods
+    public void setResolution(BlockSide side, Vector2i resolution) {
+        // TODO: Implement resolution management
+    }
+    
+    public void setRotation(BlockSide side, Object rotation) {
+        // TODO: Implement rotation management
+    }
+    
+    // Rights/permissions management
+    public void setRights(Object player, BlockSide side, Object friendRights, Object ownerRights) {
+        // TODO: Implement rights management
+    }
+    
+    // Upgrade management methods
+    public void addUpgrade(BlockSide side, Object upgrade, Object player, boolean notify) {
+        // TODO: Implement upgrade system
+    }
+    
+    public void removeUpgrade(BlockSide side, Object upgrade, Object player) {
+        // TODO: Implement upgrade system
+    }
+    
+    // Laser control methods
+    public void laserUp(BlockSide side, Object sender, int button) {
+        // TODO: Implement laser pointer up event
+    }
+    
+    public void laserDownMove(BlockSide side, Object sender, Vector2i coord, boolean down, int button) {
+        // TODO: Implement laser pointer down/move event
+    }
+    
+    public void laserMove(BlockSide side, Object sender, Vector2i coord) {
+        // TODO: Implement laser pointer move event
+    }
 }
