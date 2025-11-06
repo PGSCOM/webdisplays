@@ -41,14 +41,22 @@ public class ScreenBlockEntity extends BlockEntity {
     }
 
     // Stub: Screen management methods
-    public Object getScreen(BlockSide side) {
-        // TODO: Return ScreenData when available
-        return null;
+    public ScreenData getScreen(BlockSide side) {
+        // TODO: Implement proper screen management
+        return new ScreenData();
     }
 
     public boolean hasUpgrade(Object upgrade) {
         // TODO: Implement when IUpgrade is available
         return false;
+    }
+    
+    public void clearUpgrades(BlockSide side) {
+        // TODO: Implement
+    }
+    
+    public void addUpgrade(Object upgrade, BlockSide side) {
+        // TODO: Implement
     }
 
     public Vector2i getSize(BlockSide side) {
@@ -62,10 +70,22 @@ public class ScreenBlockEntity extends BlockEntity {
     }
 
     // Stub: Interaction methods
+    public void click(BlockSide side, Vector2i vec, Object hit) {
+        // TODO: Implement when click handling is available
+    }
+    
     public void click(Object player, BlockSide side, Object hit) {
         // TODO: Implement when click handling is available
     }
 
+    public void type(BlockSide side, String text, BlockPos soundPos) {
+        // TODO: Implement when keyboard handling is available (client-side)
+    }
+    
+    public void type(BlockSide side, String text, BlockPos soundPos, Object player) {
+        // TODO: Implement when keyboard handling is available (server-side)
+    }
+    
     public void type(Object player, BlockSide side, String text) {
         // TODO: Implement when keyboard handling is available
     }
