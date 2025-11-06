@@ -142,6 +142,8 @@ public class ClientProxy extends SharedProxy implements ResourceManagerReloadLis
 				stack1.getItem() instanceof ItemLaserPointer))
 			return;
 		
+		// TODO: Re-enable when LaserPointerRenderer is available
+		/*
 		if (!LaserPointerRenderer.isOn()) {
 			RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.ONE_MINUS_DST_COLOR, GlStateManager.DestFactor.ONE_MINUS_SRC_COLOR, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 
@@ -151,6 +153,7 @@ public class ClientProxy extends SharedProxy implements ResourceManagerReloadLis
 			ci.cancel();
 			return;
 		}
+		*/
 		
 		Minecraft mc = Minecraft.getInstance();
 		
@@ -241,7 +244,8 @@ public class ClientProxy extends SharedProxy implements ResourceManagerReloadLis
 	private Minecraft mc;
 	// TODO: Re-enable when MinePadRenderer is available
 	// private MinePadRenderer minePadRenderer;
-	private LaserPointerRenderer laserPointerRenderer;
+	// TODO: Re-enable when LaserPointerRenderer is available
+	// private LaserPointerRenderer laserPointerRenderer;
 	private Screen nextScreen;
 	private boolean isF1Down;
 	
@@ -288,7 +292,7 @@ public class ClientProxy extends SharedProxy implements ResourceManagerReloadLis
 	public void onCefInit() {
 		// TODO: Re-enable when MinePadRenderer is available
 		// minePadRenderer = new MinePadRenderer();
-		laserPointerRenderer = new LaserPointerRenderer();
+		// laserPointerRenderer = new LaserPointerRenderer();
 
 		if (!MCEF.isInitialized()) return;
 
@@ -698,12 +702,15 @@ public class ClientProxy extends SharedProxy implements ResourceManagerReloadLis
 			}
 		}
 		
+		// TODO: Re-enable when LaserPointerRenderer is available
+		/*
 		//Laser pointer raycast
 		if (LaserPointerRenderer.isOn()) {
 			ItemLaserPointer.tick(mc);
 		} else {
 			ItemLaserPointer.deselect(mc);
 		}
+		*/
 		
 		//Miniserv
 		if (msClientStarted && mc.player == null) {
