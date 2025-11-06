@@ -51,6 +51,11 @@ public class ScreenBlockEntity extends BlockEntity {
         return false;
     }
     
+    public boolean hasUpgrade(BlockSide side, Object item) {
+        // TODO: Implement upgrade check for specific side and item
+        return false;
+    }
+    
     public void clearUpgrades(BlockSide side) {
         // TODO: Implement
     }
@@ -71,6 +76,10 @@ public class ScreenBlockEntity extends BlockEntity {
 
     // Stub: Interaction methods
     public void click(BlockSide side, Vector2i vec, Object hit) {
+        // TODO: Implement when click handling is available
+    }
+    
+    public void click(BlockSide side, Vector2i vec) {
         // TODO: Implement when click handling is available
     }
     
@@ -160,6 +169,19 @@ public class ScreenBlockEntity extends BlockEntity {
     
     public void setScreenURL(BlockSide side, String url) {
         // TODO: Implement set URL logic
+    }
+    
+    public int screenCount() {
+        // TODO: Return actual screen count
+        return 0;
+    }
+    
+    public void addScreen(BlockSide side, Vector2i size, Object rotation, Object player, boolean chat) {
+        // TODO: Implement add screen logic
+    }
+    
+    public void onDestroy(Object player) {
+        // TODO: Implement destroy logic
     }
 }
 
