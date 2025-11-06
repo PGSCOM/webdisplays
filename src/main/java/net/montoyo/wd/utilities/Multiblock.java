@@ -51,7 +51,7 @@ public abstract class Multiblock {
         do {
             pos.add(side.left);
             pos.toBlock(bp);
-        } while (override.apply(pos, world.getBlockState(bp).getBlock() == BlockRegistry.SCREEN_BLOCk.get()));
+        } while (override.apply(pos, world.getBlockState(bp).getBlock() == BlockRegistry.SCREEN_BLOCK.get()));
 
         pos.add(side.right);
 
@@ -59,7 +59,7 @@ public abstract class Multiblock {
         do {
             pos.add(side.down);
             pos.toBlock(bp);
-        } while (override.apply(pos, world.getBlockState(bp).getBlock() == BlockRegistry.SCREEN_BLOCk.get()));
+        } while (override.apply(pos, world.getBlockState(bp).getBlock() == BlockRegistry.SCREEN_BLOCK.get()));
 
         pos.add(side.up);
     }
@@ -77,7 +77,7 @@ public abstract class Multiblock {
             pos.add(side.up);
             pos.toBlock(bp);
             ret.y++;
-        } while (world.getBlockState(bp).getBlock() == BlockRegistry.SCREEN_BLOCk.get());
+        } while (world.getBlockState(bp).getBlock() == BlockRegistry.SCREEN_BLOCK.get());
 
         pos.add(side.down);
 
@@ -86,7 +86,7 @@ public abstract class Multiblock {
             pos.add(side.right);
             pos.toBlock(bp);
             ret.x++;
-        } while (world.getBlockState(bp).getBlock() == BlockRegistry.SCREEN_BLOCk.get());
+        } while (world.getBlockState(bp).getBlock() == BlockRegistry.SCREEN_BLOCK.get());
 
         return ret;
     }
@@ -101,17 +101,17 @@ public abstract class Multiblock {
         for (int y = 0; y < size.y; y++) {
             for (int x = 0; x < size.x; x++) {
                 pos.toBlock(bp);
-                if (!(world.getBlockState(bp).getBlock() == BlockRegistry.SCREEN_BLOCk.get()))
+                if (!(world.getBlockState(bp).getBlock() == BlockRegistry.SCREEN_BLOCK.get()))
                     return pos; //Hole
 
                 pos.add(side.forward);
                 pos.toBlock(bp);
-                if (world.getBlockState(bp).getBlock() == BlockRegistry.SCREEN_BLOCk.get())
+                if (world.getBlockState(bp).getBlock() == BlockRegistry.SCREEN_BLOCK.get())
                     return pos; //Back should be empty
 
                 pos.addMul(side.backward, 2);
                 pos.toBlock(bp);
-                if (world.getBlockState(bp).getBlock() == BlockRegistry.SCREEN_BLOCk.get())
+                if (world.getBlockState(bp).getBlock() == BlockRegistry.SCREEN_BLOCK.get())
                     return pos; //Front should be empty
 
                 pos.add(side.forward);
@@ -128,7 +128,7 @@ public abstract class Multiblock {
 
         for (int y = 0; y < size.y; y++) {
             pos.toBlock(bp);
-            if (world.getBlockState(bp).getBlock() == BlockRegistry.SCREEN_BLOCk.get())
+            if (world.getBlockState(bp).getBlock() == BlockRegistry.SCREEN_BLOCK.get())
                 return pos; //Left edge should be empty
 
             pos.add(side.up);
@@ -140,7 +140,7 @@ public abstract class Multiblock {
 
         for (int y = 0; y < size.y; y++) {
             pos.toBlock(bp);
-            if (world.getBlockState(bp).getBlock() == BlockRegistry.SCREEN_BLOCk.get())
+            if (world.getBlockState(bp).getBlock() == BlockRegistry.SCREEN_BLOCK.get())
                 return pos; //Left edge should be empty
 
             pos.add(side.up);
@@ -152,7 +152,7 @@ public abstract class Multiblock {
 
         for (int x = 0; x < size.x; x++) {
             pos.toBlock(bp);
-            if (world.getBlockState(bp).getBlock() == BlockRegistry.SCREEN_BLOCk.get())
+            if (world.getBlockState(bp).getBlock() == BlockRegistry.SCREEN_BLOCK.get())
                 return pos; //Left edge should be empty
 
             pos.add(side.right);
@@ -164,7 +164,7 @@ public abstract class Multiblock {
 
         for (int x = 0; x < size.x; x++) {
             pos.toBlock(bp);
-            if (world.getBlockState(bp).getBlock() == BlockRegistry.SCREEN_BLOCk.get())
+            if (world.getBlockState(bp).getBlock() == BlockRegistry.SCREEN_BLOCK.get())
                 return pos; //Left edge should be empty
 
             pos.add(side.right);

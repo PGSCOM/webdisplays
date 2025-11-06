@@ -147,6 +147,7 @@ public class SharedProxy {
             dist = Math.min(dist, dist2);
         }
         */
+        double dist = 0.0; // TODO: Implement properly when Location tracking is enabled
         return dist;
     }
 }
