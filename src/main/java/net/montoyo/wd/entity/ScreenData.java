@@ -215,8 +215,6 @@ public class ScreenData {
                 if (rotation.isVertical)
                     mcefBrowser.resize(resolution.y, resolution.x);
                 else
-        */
-    }
                     mcefBrowser.resize(resolution.x, resolution.y);
 
                 mcefBrowser.setCursorChangeListener((type) -> mouseType = type);
@@ -230,5 +228,6 @@ public class ScreenData {
             doTurnOnAnim = doAnim;
             turnOnTime = System.currentTimeMillis();
         }
+        */
     }
 }
