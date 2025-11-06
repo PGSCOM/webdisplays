@@ -54,6 +54,12 @@ public class ScreenBlock extends BaseEntityBlock {
     }
 
     @Override
+    protected com.mojang.serialization.MapCodec<? extends BaseEntityBlock> codec() {
+        // TODO: Implement proper codec for ScreenBlock
+        return simpleCodec(ScreenBlock::new);
+    }
+
+    @Override
     public void onRemove(BlockState p_60515_, Level p_60516_, BlockPos p_60517_, BlockState p_60518_, boolean p_60519_) {
         // TODO: make this also get called on client?
         if (p_60518_.getBlock() == p_60515_.getBlock()) return;
