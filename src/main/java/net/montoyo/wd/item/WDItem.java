@@ -15,8 +15,9 @@ import java.util.List;
 
 public interface WDItem {
     static void addInformation(@Nullable List<String> tt) {
-        if (tt != null && WebDisplays.PROXY.isShiftDown())
-            tt.add(ChatFormatting.GRAY + I18n.get("item.webdisplays.wiki"));
+        // TODO: Re-enable when SharedProxy is available
+        // if (tt != null && WebDisplays.PROXY.isShiftDown())
+        //     tt.add(ChatFormatting.GRAY + I18n.get("item.webdisplays.wiki"));
     }
 
     String getWikiName(@Nonnull ItemStack is);

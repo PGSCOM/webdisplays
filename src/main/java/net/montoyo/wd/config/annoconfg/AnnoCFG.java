@@ -213,7 +213,12 @@ public class AnnoCFG {
 		}
 	}
 	
+	// TODO: Update for NeoForge 1.21.1 - ModLoadingContext.registerConfig API changed
+	// The signature for registerConfig may have changed in 1.21.1
+	// Research: ModLoadingContext.get().registerConfig() new parameters
 	public void create(ModConfig.Type type, String file) {
-		ModLoadingContext.get().registerConfig(type, mySpec, file);
+		// TEMPORARY: Commented out until API is researched
+		// ModLoadingContext.get().registerConfig(type, mySpec, file);
+		System.out.println("WARNING: AnnoCFG.create() is disabled - config registration skipped");
 	}
 }

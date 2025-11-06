@@ -4,14 +4,15 @@
 
 package net.montoyo.wd.data;
 
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-import net.montoyo.wd.client.gui.GuiSetURL2;
+// TODO: Client-side imports disabled
+// import net.minecraft.client.gui.screens.Screen;
+// import net.minecraft.world.level.Level;
+// import net.minecraft.world.level.block.entity.BlockEntity;
+// import net.neoforged.api.distmarker.Dist;
+// import net.neoforged.api.distmarker.OnlyIn;
+// import net.montoyo.wd.client.gui.GuiSetURL2;
 import net.montoyo.wd.entity.ScreenBlockEntity;
 import net.montoyo.wd.net.BufferUtils;
 import net.montoyo.wd.utilities.data.BlockSide;

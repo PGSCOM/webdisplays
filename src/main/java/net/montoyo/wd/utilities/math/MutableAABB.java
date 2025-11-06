@@ -1,30 +1,54 @@
 /*
  * Copyright (C) 2018 BARBOTIN Nicolas
+ * Refactored for 1.21.1: Changed from inheritance to composition
+ * because AABB fields are final in 1.21.1
  */
 
 package net.montoyo.wd.utilities.math;
 
 import net.minecraft.world.phys.AABB;
 
-public final class MutableAABB extends AABB {
+public final class MutableAABB {
+    // Mutable coordinate fields (composition instead of inheritance)
+    private double minX, minY, minZ;
+    private double maxX, maxY, maxZ;
+
     public MutableAABB() {
-        super(0, 0, 0, 0, 0, 0);
+        this.minX = this.minY = this.minZ = 0;
+        this.maxX = this.maxY = this.maxZ = 0;
     }
 
     public MutableAABB(Vector3i pos) {
-        super(pos.x, pos.y, pos.z, pos.x, pos.y, pos.z);
+        this.minX = this.maxX = pos.x;
+        this.minY = this.maxY = pos.y;
+        this.minZ = this.maxZ = pos.z;
     }
 
     public MutableAABB(Vector3i a, Vector3i b) {
-        super(a.x, a.y, a.z, b.x, b.y, b.z);
+        this.minX = a.x;
+        this.minY = a.y;
+        this.minZ = a.z;
+        this.maxX = b.x;
+        this.maxY = b.y;
+        this.maxZ = b.z;
     }
 
-    public MutableAABB(net.minecraft.world.phys.AABB bb) {
-        super(bb.minX, bb.minY, bb.minZ, bb.maxX, bb.maxY, bb.maxZ);
+    public MutableAABB(AABB bb) {
+        this.minX = bb.minX;
+        this.minY = bb.minY;
+        this.minZ = bb.minZ;
+        this.maxX = bb.maxX;
+        this.maxY = bb.maxY;
+        this.maxZ = bb.maxZ;
     }
 
     public MutableAABB(double x1, double y1, double z1, double x2, double y2, double z2) {
-        super(x1, y1, z1, x2, y2, z2);
+        this.minX = x1;
+        this.minY = y1;
+        this.minZ = z1;
+        this.maxX = x2;
+        this.maxY = y2;
+        this.maxZ = z2;
     }
 
     public MutableAABB expand(Vector3i vec) {
@@ -46,8 +70,7 @@ public final class MutableAABB extends AABB {
         return this;
     }
 
-    @Override
-    public AABB move(double x, double y, double z) {
+    public MutableAABB move(double x, double y, double z) {
         minX += x;
         minY += y;
         minZ += z;
@@ -57,7 +80,7 @@ public final class MutableAABB extends AABB {
         return this;
     }
 
-    public net.minecraft.world.phys.AABB toMc() {
+    public AABB toMc() {
         return new AABB(minX, minY, minZ, maxX, maxY, maxZ);
     }
 
@@ -80,4 +103,12 @@ public final class MutableAABB extends AABB {
         maxY = Math.max(maxY, Math.max(y1, y2));
         maxZ = Math.max(maxZ, Math.max(z1, z2));
     }
+
+    // Getters for compatibility with code expecting AABB-like interface
+    public double getMinX() { return minX; }
+    public double getMinY() { return minY; }
+    public double getMinZ() { return minZ; }
+    public double getMaxX() { return maxX; }
+    public double getMaxY() { return maxY; }
+    public double getMaxZ() { return maxZ; }
 }

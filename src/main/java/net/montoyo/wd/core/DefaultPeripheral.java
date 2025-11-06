@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
-public enum DefaultPeripheral implements StringRepresentable {
+public enum DefaultPeripheral implements StringRepresentable, IUpgrade {
     KEYBOARD("keyboard", "Keyboard", KeyboardBlockEntity::new, BlockRegistry.KEYBOARD_BLOCK),                          //WITH FACING (< 3)
 //    CC_INTERFACE("ccinterface", "ComputerCraft_Interface", TileEntityCCInterface.class),
 //    OC_INTERFACE("cointerface", "OpenComputers_Interface", TileEntityOCInterface.class),
@@ -69,5 +69,35 @@ public enum DefaultPeripheral implements StringRepresentable {
     @Override
     public @NotNull String getSerializedName() {
         return "default_peripheral_" + name;
+    }
+    
+    // IUpgrade implementation stubs
+    @Override
+    public void onInstall(@javax.annotation.Nonnull net.montoyo.wd.entity.ScreenBlockEntity tes,
+                         @javax.annotation.Nonnull net.montoyo.wd.utilities.data.BlockSide screenSide,
+                         @javax.annotation.Nullable net.minecraft.world.entity.player.Player player,
+                         @javax.annotation.Nonnull net.minecraft.world.item.ItemStack is) {
+        // TODO: Implement installation logic
+    }
+    
+    @Override
+    public boolean onRemove(@javax.annotation.Nonnull net.montoyo.wd.entity.ScreenBlockEntity tes,
+                           @javax.annotation.Nonnull net.montoyo.wd.utilities.data.BlockSide screenSide,
+                           @javax.annotation.Nullable net.minecraft.world.entity.player.Player player,
+                           @javax.annotation.Nonnull net.minecraft.world.item.ItemStack is) {
+        // TODO: Implement removal logic
+        return false;
+    }
+    
+    @Override
+    public boolean isSameUpgrade(@javax.annotation.Nonnull net.minecraft.world.item.ItemStack myStack,
+                                @javax.annotation.Nonnull net.minecraft.world.item.ItemStack otherStack) {
+        // TODO: Implement comparison logic
+        return false;
+    }
+    
+    @Override
+    public String getJSName(@javax.annotation.Nonnull net.minecraft.world.item.ItemStack is) {
+        return "webdisplays:" + name;
     }
 }
