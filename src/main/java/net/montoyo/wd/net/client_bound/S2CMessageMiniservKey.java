@@ -9,7 +9,7 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.montoyo.wd.WebDisplays;
-import net.montoyo.wd.client.ClientProxy;
+// import net.montoyo.wd.client.ClientProxy; // Disabled
 import net.montoyo.wd.miniserv.client.Client;
 import net.montoyo.wd.net.BufferUtils;
 import net.montoyo.wd.net.WDPayload;

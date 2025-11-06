@@ -12,7 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.montoyo.wd.WebDisplays;
-import net.montoyo.wd.client.ClientProxy;
+// import net.montoyo.wd.client.ClientProxy; // Disabled
 import net.montoyo.wd.config.CommonConfig;
 import net.montoyo.wd.core.ScreenRights;
 import net.montoyo.wd.utilities.*;
