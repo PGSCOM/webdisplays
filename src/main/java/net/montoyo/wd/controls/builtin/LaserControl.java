@@ -56,8 +56,8 @@ public class LaserControl extends ScreenControl {
 	@Override
 	public void handleServer(BlockPos pos, BlockSide side, ScreenBlockEntity tes, IPayloadContext ctx, Function<Integer, Boolean> permissionChecker) throws MissingPermissionException {
 		// feel like this makes sense, but I wanna get opinions first
-//		checkPerms(ScreenRights.INTERACT, permissionChecker, ctx.getSender());
-		ServerPlayer sender = ctx.getSender();
+//		checkPerms(ScreenRights.INTERACT, permissionChecker, ctx.player());
+		ServerPlayer sender = ctx.player();
 		switch (type) {
 			case UP -> tes.laserUp(side, sender, button);
 			case DOWN -> tes.laserDownMove(side, sender, coord, true, button);

@@ -11,53 +11,42 @@ import net.montoyo.wd.core.MissingPermissionException;
 import net.montoyo.wd.core.ScreenRights;
 import net.montoyo.wd.entity.ScreenBlockEntity;
 import net.montoyo.wd.utilities.data.BlockSide;
-import net.montoyo.wd.utilities.math.Vector3i;
 
 import java.util.function.Function;
 
-public class SetURLControl extends ScreenControl {
-	public static final ResourceLocation id = new ResourceLocation("webdisplays:set_url");
+public class KeyTypedControl extends ScreenControl {
+	public static final ResourceLocation id = new ResourceLocation("webdisplays:type");
 	
-	String url;
-	Vector3i remoteLocation;
+	String text;
+	BlockPos soundPos;
 	
-	public SetURLControl(String url, Vector3i remoteLocation) {
+	public KeyTypedControl(String text, BlockPos soundPos) {
 		super(id);
-		this.url = url;
-		this.remoteLocation = remoteLocation;
+		this.text = text;
+		this.soundPos = soundPos;
 	}
 	
-	public SetURLControl(FriendlyByteBuf buf) {
+	public KeyTypedControl(FriendlyByteBuf buf) {
 		super(id);
-		url = buf.readUtf();
-		if (buf.readBoolean()) remoteLocation = new Vector3i(buf);
+		text = buf.readUtf();
+		soundPos = buf.readBlockPos();
 	}
 	
 	@Override
 	public void write(FriendlyByteBuf buf) {
-		buf.writeUtf(url);
-		buf.writeBoolean(remoteLocation != null);
-		if (remoteLocation != null) remoteLocation.writeTo(buf);
+		buf.writeUtf(text);
+		buf.writeBlockPos(soundPos);
 	}
 	
 	@Override
 	public void handleServer(BlockPos pos, BlockSide side, ScreenBlockEntity tes, IPayloadContext ctx, Function<Integer, Boolean> permissionChecker) throws MissingPermissionException {
-		// TODO: deal with remote
-		checkPerms(ScreenRights.CHANGE_URL, permissionChecker, ctx.getSender());
-		try {
-			tes.setScreenURL(side, url);
-		} catch (Throwable err) {
-			err.printStackTrace();
-		}
+		checkPerms(ScreenRights.INTERACT, permissionChecker, ctx.player());
+		tes.type(side, text, soundPos, ctx.player());
 	}
 	
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void handleClient(BlockPos pos, BlockSide side, ScreenBlockEntity tes, IPayloadContext ctx) {
-		try {
-			tes.setScreenURL(side, url);
-		} catch (Throwable err) {
-			err.printStackTrace();
-		}
+		tes.type(side, text, soundPos);
 	}
 }

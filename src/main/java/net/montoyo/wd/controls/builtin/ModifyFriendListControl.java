@@ -3,6 +3,7 @@ package net.montoyo.wd.controls.builtin;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
@@ -11,39 +12,45 @@ import net.montoyo.wd.core.MissingPermissionException;
 import net.montoyo.wd.core.ScreenRights;
 import net.montoyo.wd.entity.ScreenBlockEntity;
 import net.montoyo.wd.utilities.data.BlockSide;
+import net.montoyo.wd.utilities.serialization.NameUUIDPair;
 
 import java.util.function.Function;
 
-public class AutoVolumeControl extends ScreenControl {
-	public static final ResourceLocation id = new ResourceLocation("webdisplays:auto_volume");
+public class ModifyFriendListControl extends ScreenControl {
+	public static final ResourceLocation id = new ResourceLocation("webdisplays:mod_friend_list");
 	
-	boolean autoVol;
+	boolean adding;
+	NameUUIDPair friend;
 	
-	public AutoVolumeControl(boolean autoVol) {
+	public ModifyFriendListControl(NameUUIDPair pair, boolean adding) {
 		super(id);
-		this.autoVol = autoVol;
+		this.adding = adding;
+		this.friend = pair;
 	}
 	
-	public AutoVolumeControl(FriendlyByteBuf buf) {
+	public ModifyFriendListControl(FriendlyByteBuf buf) {
 		super(id);
-		autoVol = buf.readBoolean();
+		adding = buf.readBoolean();
+		friend = new NameUUIDPair(buf);
 	}
 	
 	@Override
 	public void write(FriendlyByteBuf buf) {
-		buf.writeBoolean(autoVol);
+		buf.writeBoolean(adding);
+		friend.writeTo(buf);
 	}
 	
 	@Override
 	public void handleServer(BlockPos pos, BlockSide side, ScreenBlockEntity tes, IPayloadContext ctx, Function<Integer, Boolean> permissionChecker) throws MissingPermissionException {
-		// I feel like there's probably a better permission category
-		checkPerms(ScreenRights.MANAGE_UPGRADES, permissionChecker, ctx.getSender());
-		tes.setAutoVolume(side, autoVol);
+		ServerPlayer player = ctx.player();
+		checkPerms(ScreenRights.MANAGE_FRIEND_LIST, permissionChecker, ctx.player());
+		if (adding) tes.addFriend(player, side, friend);
+		else tes.removeFriend(player, side, friend);
 	}
 	
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void handleClient(BlockPos pos, BlockSide side, ScreenBlockEntity tes, IPayloadContext ctx) {
-		tes.setAutoVolume(side, autoVol);
+		throw new RuntimeException("TODO");
 	}
 }

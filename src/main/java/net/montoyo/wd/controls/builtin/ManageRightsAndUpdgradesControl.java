@@ -81,10 +81,10 @@ public class ManageRightsAndUpdgradesControl extends ScreenControl {
 	
 	@Override
 	public void handleServer(BlockPos pos, BlockSide side, ScreenBlockEntity tes, IPayloadContext ctx, Function<Integer, Boolean> permissionChecker) throws MissingPermissionException {
-		ServerPlayer player = ctx.getSender();
+		ServerPlayer player = ctx.player();
 		switch (type) {
 			case UPGRADES -> {
-				checkPerms(ScreenRights.MANAGE_UPGRADES, permissionChecker, ctx.getSender());
+				checkPerms(ScreenRights.MANAGE_UPGRADES, permissionChecker, ctx.player());
 				if (adding)
 					throw new RuntimeException("Cannot add an upgrade from the client");
 				else tes.removeUpgrade(side, toRemove, player);
@@ -104,7 +104,7 @@ public class ManageRightsAndUpdgradesControl extends ScreenControl {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void handleClient(BlockPos pos, BlockSide side, ScreenBlockEntity tes, IPayloadContext ctx) {
-		ServerPlayer player = ctx.getSender();
+		ServerPlayer player = ctx.player();
 		switch (type) {
 			case UPGRADES -> {
 				if (adding)

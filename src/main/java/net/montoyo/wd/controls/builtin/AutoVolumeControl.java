@@ -14,39 +14,36 @@ import net.montoyo.wd.utilities.data.BlockSide;
 
 import java.util.function.Function;
 
-public class KeyTypedControl extends ScreenControl {
-	public static final ResourceLocation id = new ResourceLocation("webdisplays:type");
+public class AutoVolumeControl extends ScreenControl {
+	public static final ResourceLocation id = new ResourceLocation("webdisplays:auto_volume");
 	
-	String text;
-	BlockPos soundPos;
+	boolean autoVol;
 	
-	public KeyTypedControl(String text, BlockPos soundPos) {
+	public AutoVolumeControl(boolean autoVol) {
 		super(id);
-		this.text = text;
-		this.soundPos = soundPos;
+		this.autoVol = autoVol;
 	}
 	
-	public KeyTypedControl(FriendlyByteBuf buf) {
+	public AutoVolumeControl(FriendlyByteBuf buf) {
 		super(id);
-		text = buf.readUtf();
-		soundPos = buf.readBlockPos();
+		autoVol = buf.readBoolean();
 	}
 	
 	@Override
 	public void write(FriendlyByteBuf buf) {
-		buf.writeUtf(text);
-		buf.writeBlockPos(soundPos);
+		buf.writeBoolean(autoVol);
 	}
 	
 	@Override
 	public void handleServer(BlockPos pos, BlockSide side, ScreenBlockEntity tes, IPayloadContext ctx, Function<Integer, Boolean> permissionChecker) throws MissingPermissionException {
-		checkPerms(ScreenRights.INTERACT, permissionChecker, ctx.getSender());
-		tes.type(side, text, soundPos, ctx.getSender());
+		// I feel like there's probably a better permission category
+		checkPerms(ScreenRights.MANAGE_UPGRADES, permissionChecker, ctx.player());
+		tes.setAutoVolume(side, autoVol);
 	}
 	
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void handleClient(BlockPos pos, BlockSide side, ScreenBlockEntity tes, IPayloadContext ctx) {
-		tes.type(side, text, soundPos);
+		tes.setAutoVolume(side, autoVol);
 	}
 }
