@@ -91,9 +91,12 @@ public class ScreenData {
 
         for (int i = 0; i < upgrades.size(); i++) {
             // TODO: Needs HolderLookup.Provider for proper ItemStack deserialization in 1.21.1
-            // For now, using parseOptional as a workaround
+            // For now, parsing without provider (basic deserialization)
             try {
-                ret.upgrades.add(ItemStack.parseOptional(net.minecraft.core.HolderLookup.Provider.create(), upgrades.getCompound(i)));
+                ItemStack parsed = ItemStack.parse(upgrades.getCompound(i)).orElse(ItemStack.EMPTY);
+                if (!parsed.isEmpty()) {
+                    ret.upgrades.add(parsed);
+                }
             } catch (Exception e) {
                 // Skip invalid upgrades
             }
@@ -138,9 +141,11 @@ public class ScreenData {
         list = new ListTag();
         for (ItemStack is : upgrades) {
             // TODO: Needs HolderLookup.Provider for proper ItemStack serialization in 1.21.1
-            // For now, using saveOptional as a workaround
+            // For now, saving without provider (basic serialization)
             try {
-                list.add(is.saveOptional(net.minecraft.core.HolderLookup.Provider.create()));
+                CompoundTag itemTag = new CompoundTag();
+                is.save(itemTag);
+                list.add(itemTag);
             } catch (Exception e) {
                 // Skip invalid upgrades
             }
@@ -200,6 +205,8 @@ public class ScreenData {
     }
 
     public void createBrowser(ScreenBlockEntity be, boolean doAnim) {
+        // TODO: Restore client-side browser creation when ClientProxy is fully migrated
+        /*
         if (WebDisplays.PROXY instanceof ClientProxy) {
             browser = WDBrowser.createBrowser(WebDisplays.applyBlacklist(url != null ? url : "https://www.google.com"), false);
 
@@ -208,6 +215,8 @@ public class ScreenData {
                 if (rotation.isVertical)
                     mcefBrowser.resize(resolution.y, resolution.x);
                 else
+        */
+    }
                     mcefBrowser.resize(resolution.x, resolution.y);
 
                 mcefBrowser.setCursorChangeListener((type) -> mouseType = type);

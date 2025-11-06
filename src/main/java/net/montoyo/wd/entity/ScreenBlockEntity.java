@@ -143,4 +143,10 @@ public class ScreenBlockEntity extends BlockEntity {
     public void laserMove(BlockSide side, Object sender, Vector2i coord) {
         // TODO: Implement laser pointer move event
     }
+    
+    // Mouse event handling
+    public void handleMouseEvent(BlockSide side, Object eventType, Vector2i coord, int button) {
+        // TODO: Implement mouse event handling
+    }
 }
+
