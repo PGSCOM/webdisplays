@@ -67,7 +67,7 @@ import net.montoyo.wd.WebDisplays;
 // TODO: Disabled temporarily - ScreenBlock.java.disabled
 // import net.montoyo.wd.block.ScreenBlock;
 import net.montoyo.wd.client.gui.*;
-import net.montoyo.wd.client.gui.loading.GuiLoader;
+// import net.montoyo.wd.client.gui.loading.GuiLoader;
 import net.montoyo.wd.client.renderers.*;
 import net.montoyo.wd.core.HasAdvancement;
 // TODO: Disabled temporarily - GuiData.java.disabled, ScreenBlockEntity.java.disabled, ScreenData.java.disabled, ItemLaserPointer.java.disabled

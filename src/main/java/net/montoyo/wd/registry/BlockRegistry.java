@@ -11,8 +11,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 // import net.montoyo.wd.block.KeyboardBlockLeft;
 // import net.montoyo.wd.block.KeyboardBlockRight;
 // import net.montoyo.wd.block.PeripheralBlock;
-// TODO: Re-enable when ScreenBlock is available
-// import net.montoyo.wd.block.ScreenBlock;
+import net.montoyo.wd.block.ScreenBlock;
 // TODO: Re-enable when DefaultPeripheral is available
 // import net.montoyo.wd.core.DefaultPeripheral;
 
@@ -23,8 +22,7 @@ public class BlockRegistry {
 
     public static DeferredRegister<Block> BLOCKS = DeferredRegister.create(BuiltInRegistries.BLOCK, "webdisplays");
 
-    // TODO: Re-enable when ScreenBlock is available
-    // public static final DeferredHolder<Block, ScreenBlock> SCREEN_BLOCK = BLOCKS.register("screen", () -> new ScreenBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)));
+    public static final DeferredHolder<Block, ScreenBlock> SCREEN_BLOCK = BLOCKS.register("screen", () -> new ScreenBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)));
     
     // TODO: Re-enable when KeyboardBlock and PeripheralBlock are available
     /*
