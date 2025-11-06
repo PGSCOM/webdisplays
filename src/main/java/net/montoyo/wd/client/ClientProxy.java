@@ -117,6 +117,8 @@ public class ClientProxy extends SharedProxy implements ResourceManagerReloadLis
 		ItemStack stack = Minecraft.getInstance().player.getItemInHand(InteractionHand.MAIN_HAND);
 		ItemStack stack1 = Minecraft.getInstance().player.getItemInHand(InteractionHand.OFF_HAND);
 		
+		// TODO: Re-enable when ItemMinePad2 and MinePadRenderer are available
+		/*
 		if (stack.getItem() instanceof ItemMinePad2) {
 			float sign = 1;
 			if (Minecraft.getInstance().player.getMainArm() == HumanoidArm.LEFT) sign = -1;
@@ -134,6 +136,7 @@ public class ClientProxy extends SharedProxy implements ResourceManagerReloadLis
 				}
 			}
 		}
+		*/
 		
 		if (!(stack.getItem() instanceof ItemLaserPointer ||
 				stack1.getItem() instanceof ItemLaserPointer))
@@ -236,7 +239,8 @@ public class ClientProxy extends SharedProxy implements ResourceManagerReloadLis
 	}
 	
 	private Minecraft mc;
-	private MinePadRenderer minePadRenderer;
+	// TODO: Re-enable when MinePadRenderer is available
+	// private MinePadRenderer minePadRenderer;
 	private LaserPointerRenderer laserPointerRenderer;
 	private Screen nextScreen;
 	private boolean isF1Down;
@@ -282,7 +286,8 @@ public class ClientProxy extends SharedProxy implements ResourceManagerReloadLis
 	
 	@Override
 	public void onCefInit() {
-		minePadRenderer = new MinePadRenderer();
+		// TODO: Re-enable when MinePadRenderer is available
+		// minePadRenderer = new MinePadRenderer();
 		laserPointerRenderer = new LaserPointerRenderer();
 
 		if (!MCEF.isInitialized()) return;
@@ -778,9 +783,12 @@ public class ClientProxy extends SharedProxy implements ResourceManagerReloadLis
 		}
 	}
 	
+	// TODO: Re-enable when MinePadRenderer is available
+	/*
 	public MinePadRenderer getMinePadRenderer() {
 		return minePadRenderer;
 	}
+	*/
 	
 	public PadData getPadByID(UUID id) {
 		return padMap.get(id);
