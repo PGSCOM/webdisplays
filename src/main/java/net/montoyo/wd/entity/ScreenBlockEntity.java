@@ -132,8 +132,9 @@ public class ScreenBlockEntity extends BlockEntity {
     }
     
     // Upgrade management methods
-    public void addUpgrade(BlockSide side, Object upgrade, Object player, boolean notify) {
+    public boolean addUpgrade(BlockSide side, Object upgrade, Object player, boolean notify) {
         // TODO: Implement upgrade system
+        return true; // Temporary stub - return success
     }
     
     public void removeUpgrade(BlockSide side, Object upgrade, Object player) {
