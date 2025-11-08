@@ -45,7 +45,8 @@ public class SetURLData extends GuiData {
         remoteLocation = new Vector3i(rl);
     }
 
-
+    // TODO: Re-enable when client GUI classes are available
+    /*
     @OnlyIn(Dist.CLIENT)
     @Override
     public Screen createGui(Screen old, Level world) {
@@ -57,6 +58,7 @@ public class SetURLData extends GuiData {
 
         return new GuiSetURL2((ScreenBlockEntity) te, side, url, isRemote ? remoteLocation : null);
     }
+    */
 
     @Override
     public String getName() {

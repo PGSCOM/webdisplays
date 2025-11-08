@@ -69,6 +69,7 @@ import java.util.UUID;
 @Mod("webdisplays")
 public class WebDisplays {
     public static WebDisplays INSTANCE;
+    public static SharedProxy PROXY = new SharedProxy();
 
     // TODO: Temporarily disabled - SharedProxy.java.disabled
     // public static SharedProxy PROXY = null;
