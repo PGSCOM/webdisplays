@@ -172,6 +172,13 @@ public class ScreenBlockEntity extends BlockEntity {
         // TODO: Implement set URL logic
     }
     
+    // Static method to process URL strings - returns web URL from potentially file-based URL
+    public static String url(String url) throws java.io.IOException {
+        // TODO: Implement proper URL processing (file:// vs http:// handling)
+        // For now, return the URL as-is
+        return url;
+    }
+    
     public int screenCount() {
         // TODO: Return actual screen count
         return 0;

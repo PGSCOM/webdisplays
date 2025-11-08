@@ -67,14 +67,13 @@ import net.montoyo.wd.WebDisplays;
 // TODO: Disabled temporarily - ScreenBlock.java.disabled
 // import net.montoyo.wd.block.ScreenBlock;
 import net.montoyo.wd.client.gui.*;
-// import net.montoyo.wd.client.gui.loading.GuiLoader;
+import net.montoyo.wd.client.gui.loading.GuiLoader;
 import net.montoyo.wd.client.renderers.*;
 import net.montoyo.wd.core.HasAdvancement;
-// TODO: Disabled temporarily - GuiData.java.disabled, ScreenBlockEntity.java.disabled, ScreenData.java.disabled, ItemLaserPointer.java.disabled
-// import net.montoyo.wd.data.GuiData;
-// import net.montoyo.wd.entity.ScreenBlockEntity;
-// import net.montoyo.wd.entity.ScreenData;
-// import net.montoyo.wd.item.ItemLaserPointer;
+import net.montoyo.wd.data.GuiData;
+import net.montoyo.wd.entity.ScreenBlockEntity;
+import net.montoyo.wd.entity.ScreenData;
+import net.montoyo.wd.item.ItemLaserPointer;
 import net.montoyo.wd.item.ItemMinePad2;
 import net.montoyo.wd.item.WDItem;
 import net.montoyo.wd.miniserv.client.Client;
@@ -82,8 +81,7 @@ import net.montoyo.wd.registry.BlockRegistry;
 import net.montoyo.wd.registry.ItemRegistry;
 import net.montoyo.wd.registry.TileRegistry;
 import net.montoyo.wd.utilities.Log;
-// TODO: Re-enable when Multiblock is available
-// import net.montoyo.wd.utilities.Multiblock;
+import net.montoyo.wd.utilities.Multiblock;
 import net.montoyo.wd.utilities.browser.WDBrowser;
 import net.montoyo.wd.utilities.browser.handlers.DisplayHandler;
 import net.montoyo.wd.utilities.browser.handlers.WDRouter;
@@ -415,9 +413,11 @@ public class ClientProxy extends SharedProxy implements ResourceManagerReloadLis
 	@Override
 	@Nonnull
 	public HasAdvancement hasClientPlayerAdvancement(@Nonnull ResourceLocation rl) {
-		if (advancementToProgressField != null && mc.player != null && mc.player.connection != null) {
+		// TODO: ClientAdvancements.getAdvancements() removed in 1.21.1 - need alternative API
+		return HasAdvancement.DONT_KNOW;
+		/* if (advancementToProgressField != null && mc.player != null && mc.player.connection != null) {
 			ClientAdvancements cam = mc.player.connection.getAdvancements();
-			Advancement adv = cam.getAdvancements().get(rl);
+			// Advancement adv = cam.getAdvancements().get(rl);  // API removed in 1.21.1
 			
 			if (adv == null)
 				return HasAdvancement.DONT_KNOW;
@@ -451,6 +451,7 @@ public class ClientProxy extends SharedProxy implements ResourceManagerReloadLis
 		}
 		
 		return HasAdvancement.DONT_KNOW;
+		*/
 	}
 	
 	@Override

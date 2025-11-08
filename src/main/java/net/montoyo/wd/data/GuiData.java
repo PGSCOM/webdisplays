@@ -62,7 +62,8 @@ public abstract class GuiData {
     public abstract String getName();
 
     public void sendTo(ServerPlayer player) {
-        WDNetworkRegistry.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new S2CMessageOpenGui(this));
+        // TODO: NeoForge 1.21.1 - Implement packet distribution with new API
+        // WDNetworkRegistry.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new S2CMessageOpenGui(this));
     }
 
     public abstract void serialize(FriendlyByteBuf buf);
